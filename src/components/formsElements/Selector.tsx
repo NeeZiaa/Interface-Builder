@@ -1,69 +1,42 @@
-// import { ReactChildren, useState } from "react";
-
-// interface SelectProps {
-//   label?: string;
-//   children: React.ReactNode;
-//   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-//   defaultOption?: number;
-//   setSelected: (value: string) => void;
-// }
-
-// const Select: React.FC<SelectProps> = ({
-//   label, onChange, defaultOption = 0, setSelected, children: options
-// }) => {
-
-//   // if(defaultOption > options.length) throw new Error("Selected index is out of range")
-//   // const [selected, setSelected] = useState(options[defaultOption]);
-
-//   // const onSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-//   //   setSelected(e.target.value);
-//   //   onChange(e)
-//   // }
-//   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-//     setSelected(e.target.value);
-//     onChange(e);
-//   }
-
-//   return (
-//     <>
-//       { label && <label htmlFor="select">{label}</label>}
-//       <select onChange={onChange}>
-//         {/* {options.map((key, option) => (
-//           <option {key === defaultOption && selected}>{option}</option>
-//         ))} */}
-//       </select>
-//     </>
-//   );
-// }
-
-// export default Select;
-
+import { useEffect } from "react";
 
 interface SelectorProps {
-  label?: string;
-  children: React.ReactNode;
-  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  setSelected?: (value: string) => void;
+    options: optionsProps[];
+    onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    setSelected?: (value: string) => void;
+}
+
+interface optionsProps {
+    value: string;
+    label: string;
+    selected?: boolean;
 }
 
 const Selector: React.FC<SelectorProps> = ({
-  label, children, onChange = () => { return }, setSelected = () => { return }
+    options, onChange = () => { return }, setSelected = () => { return }
 }) => {
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("Selected item : ", e.target.value);
-    setSelected(e.target.value);
-    onChange(e);
-  }
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log("Selected item : ", e.target.value);
+        setSelected(e.target.value);
+        onChange(e);
+    }
 
-  return (
-    <>
-      { label && <label htmlFor="select">{label}</label>}
-      <select onChange={handleChange}>
-        {children}
-      </select>
-    </>
-  );
+    useEffect(() => {
+        console.log("Selector options : ", options);
+        const selectedOption = options.find(option => option.selected);
+        if(selectedOption) setSelected(selectedOption.value);
+    }, [options, setSelected]);
+
+    return (
+        <select onChange={handleChange}>
+            {options.map((option, index) => {
+                return (
+                    <option key={index} value={option.value} selected={option.selected}>{option.label}</option>
+                );
+            })}
+        </select>  
+    );
 }
 
 export default Selector;

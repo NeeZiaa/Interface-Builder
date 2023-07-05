@@ -1,16 +1,14 @@
 interface SelectProps {
-    label?: string;
-    onCheck: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    value: string;
+    onCheck: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    checked?: boolean;
 }
   
 const Checkbox: React.FC<SelectProps> = ({
-    label, onCheck
+    value, onCheck, checked=false
 }) => {
     return (
-        <>
-            { label && <label htmlFor="select">{label}</label>}
-            <input type="checkbox" onChange={onCheck} />
-        </>
+        <input type="checkbox" onChange={onCheck} checked={checked} value={value} />
     );
 }
   

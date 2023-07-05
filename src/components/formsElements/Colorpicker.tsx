@@ -15,14 +15,11 @@ const ColorPicker: React.FC<ColorPickerProps> = ({ label, defaultColor="#000000"
     }
 
     return (
-        <>
-            {label && <label htmlFor="input">{label}</label>}
-            <input
-                type="color"
-                value={color}
-                onChange={onColorChange}
-            />
-        </>
+        <input
+            type="color"
+            value={color}
+            onChange={onColorChange}
+        />
     );
 }
 

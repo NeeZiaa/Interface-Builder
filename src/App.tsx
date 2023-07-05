@@ -8,14 +8,14 @@ function App() {
 
   const ThemeContext = createContext("light");
 
-  const [selected, setSelected] = useState(false);
+  const [selected, setSelected] = useState("");
 
   useEffect(() => { 
     console.log("Selected item : ", selected);
   }, [selected]);
 
   const placeholderOptions = [
-      { value: "1", label: "Option 1" },
+      { value: "1", label: "Option 1", default: true },
       { value: "2", label: "Option 2" },
       { value: "3", label: "Option 3" },
       { value: "4", label: "Option 4" },
@@ -23,8 +23,8 @@ function App() {
 
   return (
 
-    <Field label="Select">
-      <Select options={placeholderOptions}></Select>
+    <Field label="Selector field">
+      <Select options={placeholderOptions} setSelected={setSelected}/>
     </Field>
   )
 }
