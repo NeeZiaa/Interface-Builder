@@ -5,7 +5,7 @@ import { play } from "../../utils/sound";
 const AuthorizedTypes = ['text', 'email', 'number', 'tel', 'url'];
 
 const TextField: React.FC<T_TextField> = ({ 
-    name, type, defaultValue, onChange, placeholder, disabled=false, autoComplete=false
+    name, type, defaultValue="", onChange, placeholder="", disabled=false, autoComplete=false, required=false
 }) => {
 
     if(!AuthorizedTypes.includes(type)) throw new Error(`Input type ${type} is not supported`);
@@ -14,7 +14,7 @@ const TextField: React.FC<T_TextField> = ({
         <input 
             type={type}
             name={name}
-            value={defaultValue}
+            defaultValue={defaultValue}
             onChange={
                 (event: React.ChangeEvent<HTMLInputElement>) => {
                     onChange && onChange(event);
@@ -25,6 +25,7 @@ const TextField: React.FC<T_TextField> = ({
             autoComplete={autoComplete ? 'on' : 'off'}
             disabled={disabled}
             className="styled-input"
+            required={required}
         />
     );
 }

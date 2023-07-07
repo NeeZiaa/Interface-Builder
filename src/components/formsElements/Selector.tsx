@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { T_Selector } from "../../types/components/formElements/SelectorTypes";
 
 const Selector: React.FC<T_Selector> = ({
-    options, onChange = () => { return }, setSelected = () => { return }
+    name, options, disabled=false, onChange = () => { return }, setSelected = () => { return }
 }) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -18,7 +18,7 @@ const Selector: React.FC<T_Selector> = ({
     }, [options, setSelected]);
 
     return (
-        <select onChange={handleChange}>
+        <select name={name} onChange={handleChange} disabled={disabled}>
             {options.map((option, index) => {
                 return (
                     <option key={index} value={option.value} selected={option.selected}>{option.label}</option>
