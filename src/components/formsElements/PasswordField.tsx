@@ -1,25 +1,21 @@
-interface PasswordFieldProps {
-    label?: string;
-    name: string;
-    type: string;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    placeholder: string;
-    disabled: boolean;
-}
+import { T_PasswordField } from "../../types/components/formElements/PasswordFieldTypes";
+import { checkRegexPassword } from "../../utils/regex";
+import { play } from "../../utils/sound";
 
-const AuthorizedTypes = ['text', 'email', 'number', 'tel', 'url'];
-
-const TextField: React.FC<PasswordFieldProps> = ({ 
-    label, name, type, onChange, placeholder, disabled=false
+const TextField: React.FC<T_PasswordField> = ({ 
+    name, onChange, placeholder, disabled=false
 }) => {
 
-    if(!AuthorizedTypes.includes(type)) throw new Error(`Input type ${type} is not supported`);
-    
     return (
         <input 
-            type={type}
+            type="password"
             name={name}
-            onChange={onChange}
+            onChange={
+                (event: React.ChangeEvent<HTMLInputElement>) => {
+                    onChange && onChange(event);
+                    checkRegexPassword(event.target.value) ? play("success") : play("error");
+                }
+            }
             placeholder={placeholder}
             disabled={disabled}
             className="styled-input"

@@ -3,16 +3,12 @@ import { createContext, useEffect, useState } from 'react'
 import './App.css'
 import Select from './components/formsElements/Selector';
 import Field from './components/Field';
+import { T_ItemProps } from './types/components/containers/ItemTypes';
 
 function App() {
 
-  const ThemeContext = createContext("light");
 
   const [selected, setSelected] = useState("");
-
-  useEffect(() => { 
-    console.log("Selected item : ", selected);
-  }, [selected]);
 
   const placeholderOptions = [
       { value: "1", label: "Option 1", default: true },
@@ -20,6 +16,15 @@ function App() {
       { value: "3", label: "Option 3" },
       { value: "4", label: "Option 4" },
   ]
+
+  const Item: T_ItemProps = {
+    title: "Item title",
+    children: "Item content",
+    onHover: () => { console.log("Hovered") },
+    onClick: () => { console.log("Clicked") },
+  }
+
+  console.log("Item : ", Item);
 
   return (
 

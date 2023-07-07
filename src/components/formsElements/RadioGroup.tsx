@@ -1,12 +1,7 @@
-import Radio, { RadioType } from "./Radio";
+import { T_RadioGroup } from "../../types/components/formElements/RadioTypes";
+import Radio from "./Radio";
 
-interface RadiosProps {
-    name: string;
-    options: RadioType[];
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-const RadioGroup: React.FC<RadiosProps> = ({ name, options, onChange }) => {
+const RadioGroup: React.FC<T_RadioGroup> = ({ name, options, onChange }) => {
     return (
         <div className="radio-group">
             {options.map((option, index) => {

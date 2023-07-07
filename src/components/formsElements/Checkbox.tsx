@@ -1,14 +1,13 @@
-interface SelectProps {
-    value: string;
-    onCheck: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    checked?: boolean;
-}
-  
-const Checkbox: React.FC<SelectProps> = ({
-    value, onCheck, checked=false
+import { T_Checkbox } from "../../types/components/formElements/CheckBoxTypes";
+
+const Checkbox: React.FC<T_Checkbox> = ({
+    label, value, onCheck, checked=false
 }) => {
     return (
-        <input type="checkbox" onChange={onCheck} checked={checked} value={value} />
+        <label>
+            <input type="checkbox" onChange={onCheck} checked={checked} value={value} />
+            {label}
+        </label>
     );
 }
   

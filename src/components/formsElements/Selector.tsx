@@ -1,18 +1,7 @@
 import { useEffect } from "react";
+import { T_Selector } from "../../types/components/formElements/SelectorTypes";
 
-interface SelectorProps {
-    options: optionsProps[];
-    onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-    setSelected?: (value: string) => void;
-}
-
-interface optionsProps {
-    value: string;
-    label: string;
-    selected?: boolean;
-}
-
-const Selector: React.FC<SelectorProps> = ({
+const Selector: React.FC<T_Selector> = ({
     options, onChange = () => { return }, setSelected = () => { return }
 }) => {
 

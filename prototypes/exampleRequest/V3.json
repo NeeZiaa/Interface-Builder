@@ -1,0 +1,64 @@
+{
+    "context": {
+        "theme": "dark",
+        "font": "roboto",
+        "style": "inventory"
+    },
+    "components": {
+        "header": {
+            "title": "Hello c'est un exemple",
+            "banner": "assets/image.png",
+            "description": "Petit texte de description en bas de header",
+            "children": {
+                "form": {
+                    "title": "Recherche",
+                    "description": "Recherchez un item",
+                    "button": {
+                        "display": "Rechercher",
+                        "callback": "search_item",
+                        "style": ["dark", "rounded"]
+                    },
+                    "input": {
+                        "placeholder": "Rechercher un item"
+                    },
+                    "style": ["light", "transparent"]
+                }
+            }
+        },
+        "itemsWrapper": {
+            "props": {
+                "title": "Items",
+                "description": "Liste des items",
+                "button": {
+                    "display": "Ajouter",
+                    "callback": "add_item",
+                    "style": ["dark", "rounded"]
+                },
+                "style": ["light", "transparent"]
+            },
+            "items": [
+                {
+                    "title": "Premier item",
+                    "description": "10€",
+                    "button": {
+                        "display": "Acheter",
+                        "callback": "buy_item",
+                        "style": ["dark", "rounded"]
+                    },
+                    "select": {
+                        "options": {
+                            "1": "1",
+                            "2": "2",
+                            "3": "3"
+                        }
+                    },
+                    "style": ["light", "transparent"]
+                }
+            ]
+        },
+        "footer": {
+            "description": "Copyright 2023...",
+            "image": "assets/image_test.png"
+        }        
+    }
+}

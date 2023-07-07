@@ -1,16 +1,10 @@
-interface TextFieldProps {
-    name: string;
-    type: string;
-    defaultValue?: string;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    placeholder: string;
-    disabled: boolean;
-    autoComplete: boolean;
-}
+import { T_TextField } from "../../types/components/formElements/TextFieldTypes";
+import { checkRegexEmail } from "../../utils/regex";
+import { play } from "../../utils/sound";
 
 const AuthorizedTypes = ['text', 'email', 'number', 'tel', 'url'];
 
-const TextField: React.FC<TextFieldProps> = ({ 
+const TextField: React.FC<T_TextField> = ({ 
     name, type, defaultValue, onChange, placeholder, disabled=false, autoComplete=false
 }) => {
 
@@ -21,7 +15,12 @@ const TextField: React.FC<TextFieldProps> = ({
             type={type}
             name={name}
             value={defaultValue}
-            onChange={onChange}
+            onChange={
+                (event: React.ChangeEvent<HTMLInputElement>) => {
+                    onChange && onChange(event);
+                    checkRegexEmail(event.target.value) ? play("success") : play("error");
+                }
+            }
             placeholder={placeholder}
             autoComplete={autoComplete ? 'on' : 'off'}
             disabled={disabled}

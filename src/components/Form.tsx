@@ -1,11 +1,6 @@
-interface FormProps {
-    title?: string,
-    onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-    onReset?: (event: React.FormEvent<HTMLFormElement>) => void;
-    children: React.ReactNode;
-}
+import { T_Form } from "../types/components/containers/FormTypes";
 
-const Form: React.FC<FormProps> = ({ title, onSubmit, onReset, children }) => {
+const Form: React.FC<T_Form> = ({ title, onSubmit, onReset, children }) => {
     return (
         <div className="form-container">
             {title && <h2>{title}</h2>}

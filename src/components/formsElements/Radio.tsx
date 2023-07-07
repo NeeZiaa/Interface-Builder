@@ -1,14 +1,6 @@
-interface RadioProps {
-    name: string;
-    value: string;
-    label: string;
-    checked?: boolean;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+import { T_Radio } from "../../types/components/formElements/RadioTypes";
 
-export type RadioType = Omit<RadioProps, 'name'>;
-
-const Radio: React.FC<RadioProps> = ({ name, value, label, checked=false, onChange }) => {
+const Radio: React.FC<T_Radio> = ({ name, value, label, checked=false, onChange }) => {
     return (
         <div className="radio">
             <label>

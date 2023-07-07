@@ -1,13 +1,6 @@
-interface AreaFieldProps {
-    name: string;
-    defaultValue?: string;
-    onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    placeholder: string;
-    disabled: boolean;
-    autoComplete: boolean;
-}
+import { T_AreaField } from "../../types/components/formElements/AreaFieldTypes";
 
-const AreaField: React.FC<AreaFieldProps> = ({
+const AreaField: React.FC<T_AreaField> = ({
     name, defaultValue, onChange, placeholder="", disabled=false, autoComplete=false
 }) => {
     return (
