@@ -15,7 +15,7 @@ const useHover = () => {
                 nodeRef.current.removeEventListener('mouseout', handleMouseOut);
             }
     
-            nodeRef.current = node;
+            // nodeRef.current = node;
     
             if (nodeRef.current) {
                 nodeRef.current.addEventListener('mouseover', handleMouseOver);

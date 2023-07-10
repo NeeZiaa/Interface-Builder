@@ -1,26 +1,12 @@
-import React, { useState } from "react";
+import { T_ColorPicker } from "../../types/components/formElements/ColorPicker";
 
-interface ColorPickerProps {
-    label?: string,
-    defaultColor: string,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-}
-
-const ColorPicker: React.FC<ColorPickerProps> = ({ defaultColor="#000000", onChange }) => {
-    const [color, setColor] = useState(defaultColor);
-
-    const onColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setColor(event.target.value);
-        onChange(event);
-    }
-
+const Colorpicker: React.FC<T_ColorPicker> = ( {label, name, defaultColor, onChange }) => {
     return (
-        <input
-            type="color"
-            value={color}
-            onChange={onColorChange}
-        />
+        <div className="form-group">
+            <label htmlFor={name}>{label}</label>
+            <input type="color" className="form-control" id={name} name={name} defaultValue={defaultColor} onChange={onChange} />
+        </div>
     );
 }
 
-export default ColorPicker;
+export default Colorpicker;

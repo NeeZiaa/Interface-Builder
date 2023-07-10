@@ -3,7 +3,6 @@ import { createContext, useEffect, useState } from 'react'
 import './App.css'
 import Select from './components/formsElements/Selector';
 import Field from './components/Field';
-import { T_ItemProps } from './types/components/containers/ItemTypes';
 
 function App() {
 
@@ -17,20 +16,11 @@ function App() {
       { value: "4", label: "Option 4" },
   ]
 
-  const Item: T_ItemProps = {
-    title: "Item title",
-    children: "Item content",
-    onHover: () => { console.log("Hovered") },
-    onClick: () => { console.log("Clicked") },
-  }
-
-  console.log("Item : ", Item);
-
   return (
-
-    <Field label="Selector field">
-      <Select options={placeholderOptions} setSelected={setSelected}/>
-    </Field>
+    <h1>Hello world !</h1>
+    // <Field label="Selector field">
+    //   <Select options={placeholderOptions} setSelected={setSelected}/>
+    // </Field>
   )
 }
 
