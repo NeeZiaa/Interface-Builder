@@ -1,16 +1,15 @@
-import { ComponentType } from './../types/components/ComponentsTypes';
-import { ComponentType } from "../types/components/ComponentsTypes";
 import { Components } from "../types/components/ComponentsTypes";
 
 interface Props {
     [key: string]: any;
 }
 
-function validateContext(context: Props): void {
+const validateContext = (context: Props): void => {
+
     if (!context) {
         throw new Error('Context must have a value');
     }
-    
+
     if (!context.theme) {
         throw new Error('Context must have a theme');
     }
@@ -37,12 +36,13 @@ function validateContext(context: Props): void {
 
 }
 
-function validateComponent(type: string, props: Props): void {
+const validateComponent = (type: string, props: Props): void =>  {
+
     if (!type) {
         throw new Error('Component must have a type');
     }    
-    
-    if (!Components[type]) {
+
+    if (!Components[type as keyof typeof Components]) {
         throw new Error(`Component ${type} is not a valid component`);
     }
 
@@ -51,41 +51,33 @@ function validateComponent(type: string, props: Props): void {
     }
 
     validateComponentProps(type, props);
-    
 }
-function validateComponentProps(
 
-    componentType: ComponentType,
-    props: any
-  ): boolean {
-    const requiredProps = Components[ComponentType as keyof typeof Components].requiredProps;
+const validateComponentProps = (type: string, props: Props): boolean => {
 
-    type RequiredProps = keyof typeof requiredProps;
+    const requiredProps = (Components as Props)[type as keyof typeof Components]["requiredProps"];
 
     const missingProps = Object.keys(requiredProps).filter(
-      prop => !(prop in props)
+        prop => !(prop in props)
     );
   
     if (missingProps.length > 0) {
-      console.error(
-        `Les propriétés suivantes sont manquantes pour le composant ${componentType}: ${missingProps.join(
-          ", "
-        )}`
-      );
-      return false;
-    }
-  
-    // Vérification récursive des composants imbriqués
-    for (const prop in props) {
-      if (typeof props[prop] === "object" && props[prop] !== null) {
-        const nestedComponentType = props[prop].componentType;
-        const nestedProps = props[prop].props;
-        validateComponentProps(
-          nestedComponentType,
-          nestedProps
+        console.error(
+            `Les propriétés suivantes sont manquantes pour le composant ${type}: ${missingProps.join(", ")}`
         );
-      }
+        return false;
     }
-  
+
+    for (const prop in props) {
+        if (typeof props[prop] === "object" && props[prop] !== null) {
+            const nestedComponentType = (props[prop] as {componentType: string}).componentType;
+            const nestedProps = props[prop].props;
+            validateComponentProps(
+                nestedComponentType,
+                nestedProps
+            );
+        }
+    }
+
     return true;
 }
