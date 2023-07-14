@@ -20,4 +20,6 @@ export const Components: T_Components = {
     Item: { requiredProps: ["title", "children"], optionalProps: ["onHover", "onChange"] },
     ItemsWrapper: { requiredProps: ["title", "items"], optionalProps: [] },
     Form: { requiredProps: ["children", "onSubmit"], optionalProps: ["title", "onReset"] },
+    // Display
+    Title: { requiredProps: ["text"], optionalProps: ["size", "color", "font", "style"] },
 }

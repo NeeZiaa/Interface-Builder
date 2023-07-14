@@ -6,9 +6,11 @@
     },
     "components": {
         "header": {
-            "title": "Hello c'est un exemple",
-            "banner": "assets/image.png",
-            "description": "Petit texte de description en bas de header",
+            "props": {
+                "title": "Hello c'est un exemple",
+                "banner": "assets/image.png",
+                "description": "Petit texte de description en bas de header",
+            }, 
             "form": {
                 "title": "Recherche",
                 "description": "Recherchez un item",

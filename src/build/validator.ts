@@ -4,7 +4,7 @@ interface Props {
     [key: string]: any;
 }
 
-const validateContext = (context: Props): void => {
+export const validateContext = (context: Props): boolean => {
 
     if (!context) {
         throw new Error('Context must have a value');
@@ -34,9 +34,11 @@ const validateContext = (context: Props): void => {
         throw new Error('Context style must be normal or italic');
     } 
 
+    return true;
+
 }
 
-const validateComponent = (type: string, props: Props): void =>  {
+export const validateComponent = (type: string, props: Props, children: Props|null): boolean =>  {
 
     if (!type) {
         throw new Error('Component must have a type');
@@ -51,9 +53,28 @@ const validateComponent = (type: string, props: Props): void =>  {
     }
 
     validateComponentProps(type, props);
+
+    if(children && children.length > 0) {
+        for (const c in children) {
+            if (typeof children[c] === "object" && children[c] !== null) {
+                const nestedComponentType = c;
+                const nestedProps = children[c].props;
+                const nestedChildren = children[c];
+                delete nestedChildren.props;
+
+                validateComponent(
+                    nestedComponentType,
+                    nestedProps,
+                    nestedChildren
+                );
+
+            }
+        }
+    }
+    return true;
 }
 
-const validateComponentProps = (type: string, props: Props): boolean => {
+export const validateComponentProps = (type: string, props: Props): boolean => {
 
     const requiredProps = (Components as Props)[type as keyof typeof Components]["requiredProps"];
 
@@ -66,17 +87,6 @@ const validateComponentProps = (type: string, props: Props): boolean => {
             `Les propriétés suivantes sont manquantes pour le composant ${type}: ${missingProps.join(", ")}`
         );
         return false;
-    }
-
-    for (const prop in props) {
-        if (typeof props[prop] === "object" && props[prop] !== null) {
-            const nestedComponentType = (props[prop] as {componentType: string}).componentType;
-            const nestedProps = props[prop].props;
-            validateComponentProps(
-                nestedComponentType,
-                nestedProps
-            );
-        }
     }
 
     return true;

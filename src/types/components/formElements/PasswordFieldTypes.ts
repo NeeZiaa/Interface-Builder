@@ -2,8 +2,8 @@ interface I_PasswordField {
     label?: string;
     name: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    placeholder: string;
-    disabled: boolean;
+    placeholder?: string;
+    disabled?: boolean;
 }
 
 type T_PasswordField = I_PasswordField;

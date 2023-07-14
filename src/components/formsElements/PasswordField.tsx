@@ -3,7 +3,7 @@ import { checkRegexPassword } from "../../utils/regex";
 import { play } from "../../utils/sound";
 
 const TextField: React.FC<T_PasswordField> = ({ 
-    name, onChange, placeholder, disabled=false
+    name, onChange, placeholder="", disabled=false
 }) => {
 
     return (
