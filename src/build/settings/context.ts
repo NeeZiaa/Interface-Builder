@@ -3,6 +3,7 @@ const fonts = {
     heading: 'Georgia, serif',
     mono: 'Menlo, monospace',
 };
+
 const fontSizes = {
     xs: '0.75rem',
     sm: '0.875rem',
