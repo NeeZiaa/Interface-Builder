@@ -2,7 +2,7 @@ import './App.css';
 import Title from './components/display/Title';
 import Selector from './components/formsElements/Selector';
 import Interface from './components/containers/Interface';
-import { useCallback, useEffect } from 'react';
+timport { useCallback, useEffect, useRef } from 'react';
 import { focusOut } from './utils/focus';
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
     window.addEventListener("keypress", onKeyPress);
     return () => window.removeEventListener("keypress", onKeyPress);
   }, [onKeyPress]);
-  
+
   const enterKey = () => {
     console.log("Enter pressed");
   }
@@ -42,10 +42,11 @@ function App() {
       { value: "4", label: "Option 4", selected: true },
   ];
 
-
+  const focusElements = useRef(null);
+  focusElements.current = focusElements.current.filter(item => !arr2.includes(item));
 
   return (
-    <Interface label="Interface" width="50%" height="50%">
+    <Interface label="Interface" width="50%" height="50%" ref={focusElements} ca>
       <Title>Selector</Title>
       <Selector name="selector" options={placeholderOptions} />
       <Title>Selected : </Title>
