@@ -23,3 +23,13 @@ export const Components: T_Components = {
     // Display
     Title: { requiredProps: ["text"], optionalProps: ["size", "color", "font", "style"] },
 }
+
+export const FocusableComponents: string[] = [
+    "TextField",
+    "Selector",
+    "Checkbox",
+    "Button",
+    "RadioGroup",
+    "PasswordField",
+    "Item",
+];

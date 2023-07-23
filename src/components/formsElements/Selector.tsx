@@ -11,12 +11,6 @@ const Selector: React.FC<T_Selector> = ({
         onChange(e);
     }
 
-    useEffect(() => {
-        console.log("Selector options : ", options);
-        const selectedOption = options.find(option => option.selected);
-        if(selectedOption) setSelected(selectedOption.value);
-    }, [options, setSelected]);
-
     return (
         <select name={name} onChange={handleChange} disabled={disabled}>
             {options.map((option, index) => {

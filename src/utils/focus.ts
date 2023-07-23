@@ -17,3 +17,5 @@ const focusOut = () => {
         onError: (error: unknown) => console.log(error)
     })
 }
+
+export { focusIn, focusOut }
