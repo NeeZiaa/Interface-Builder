@@ -1,56 +1,35 @@
 import './App.css';
 import Title from './components/display/Title';
-import Selector from './components/formsElements/Selector';
-import Interface from './components/containers/Interface';
-timport { useCallback, useEffect, useRef } from 'react';
-import { focusOut } from './utils/focus';
+import { useCallback, useContext, useEffect } from "react";
+import KeyboardListener, { InputContext } from "./KeyboardListener";
 
 function App() {
 
-  const onKeyPress = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Enter" ) enterKey();
-      if (e.key === "Escape") escapeKey();
-      if (e.key === "ArrowUp") arrowUpKey();
-    },
-    []
-  );
+  const { subscribe, unsubscribe } = useContext(InputContext);
+  const maReaction = useCallback((key: string) => { 
+    console.log(key); 
+    key === "a" && console.log("react !") 
+  }, []);
 
   useEffect(() => {
-    window.addEventListener("keypress", onKeyPress);
-    return () => window.removeEventListener("keypress", onKeyPress);
-  }, [onKeyPress]);
+    console.log("useEffect")
+    console.log(subscribe, unsubscribe);
+    subscribe && subscribe(maReaction);
 
-  const enterKey = () => {
-    console.log("Enter pressed");
-  }
-
-  const escapeKey = () => {
-    console.log("Escape pressed")
-    focusOut();
-  }
-
-  const arrowUpKey = () => {
-    console.log("ArrowUp pressed");
-  }
-
-
-  const placeholderOptions = [
-      { value: "1", label: "Option 1"},
-      { value: "2", label: "Option 2" },
-      { value: "3", label: "Option 3" },
-      { value: "4", label: "Option 4", selected: true },
-  ];
-
-  const focusElements = useRef(null);
-  focusElements.current = focusElements.current.filter(item => !arr2.includes(item));
+    return () => {
+      unsubscribe && unsubscribe(maReaction);
+    };
+  }, [subscribe, unsubscribe, maReaction]);
+;
 
   return (
-    <Interface label="Interface" width="50%" height="50%" ref={focusElements} ca>
-      <Title>Selector</Title>
-      <Selector name="selector" options={placeholderOptions} />
-      <Title>Selected : </Title>
-    </Interface>
+    <>
+      <KeyboardListener>
+        <Title>Hello</Title>
+        <Title>Test</Title>
+        <Title>Test2</Title>
+      </KeyboardListener>
+    </>
   )
 }
 
