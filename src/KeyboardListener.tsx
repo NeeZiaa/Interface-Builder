@@ -48,33 +48,33 @@ export default function KeyboardListener({ children }: { children: ReactNode }) 
     console.log("Subscribe", reactions)
   };
 
+  const unsubscribe = (...callbacks: ReactionArray) => {
+    console.log("Unsubscribe 1", reactions);
+    for (const callback of callbacks) {
+      for (const r of reactions) {
+        console.log(callback, r)
+        if (r === callback) {
+          reactions.splice(reactions.indexOf(r), 1);
+        }      
+        setReactions(reactions);
+      }    
+    }         
+    console.log("Unsubscribe 2", reactions);
+  };
+
   // const unsubscribe = (...callbacks: ReactionArray) => {
-  //   console.log("Unsubscribe 1", reactions);
-  //   for (const callback of callbacks) {
-  //     for (const r of reactions) {
-  //       console.log(callback, r)
-  //       if (r === callback) {
-  //         reactions.splice(reactions.indexOf(r), 1);
+  //   setReactions((prevReactions) => {
+  //     const newReactions = [...prevReactions];
+  //     for (const callback of callbacks) {
+  //       for (const r of newReactions) {
+  //         if (r === callback) {
+  //           newReactions.splice(newReactions.indexOf(r), 1);
+  //         }
   //       }
   //     }
-  //   }         
-  //   setReactions(reactions);
-  //   console.log("Unsubscribe 2", reactions);
+  //     return newReactions;
+  //   });
   // };
-
-  const unsubscribe = (...callbacks: ReactionArray) => {
-    setReactions((prevReactions) => {
-      const newReactions = [...prevReactions];
-      for (const callback of callbacks) {
-        for (const r of newReactions) {
-          if (r === callback) {
-            newReactions.splice(newReactions.indexOf(r), 1);
-          }
-        }
-      }
-      return newReactions;
-    });
-  };
 
   useEffect(() => {
     window.addEventListener("keydown", onKeyDown);
