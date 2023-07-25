@@ -1,35 +1,17 @@
 import './App.css';
+import Interface from './components/containers/Interface';
 import Title from './components/display/Title';
-import { useCallback, useContext, useEffect } from "react";
-import KeyboardListener, { InputContext } from "./KeyboardListener";
+import KeyboardListener from "./KeyboardListener";
 
 function App() {
 
-  const { subscribe, unsubscribe } = useContext(InputContext);
-  const maReaction = useCallback((key: string) => { 
-    console.log(key); 
-    key === "a" && console.log("react !") 
-  }, []);
-
-  useEffect(() => {
-    console.log("useEffect")
-    console.log(subscribe, unsubscribe);
-    subscribe && subscribe(maReaction);
-
-    return () => {
-      unsubscribe && unsubscribe(maReaction);
-    };
-  }, [subscribe, unsubscribe, maReaction]);
-;
 
   return (
-    <>
-      <KeyboardListener>
+    <KeyboardListener>
+      <Interface label={'Hello'}>
         <Title>Hello</Title>
-        <Title>Test</Title>
-        <Title>Test2</Title>
-      </KeyboardListener>
-    </>
+      </Interface>
+    </KeyboardListener>
   )
 }
 
