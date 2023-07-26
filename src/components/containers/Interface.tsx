@@ -1,20 +1,17 @@
 import { useCallback, useContext, useEffect } from "react";
 import { T_Interface } from "../../types/components/containers/InterfaceTypes"
 import Title from "../display/Title";
-import { InputContext } from "../../providers/KeyboardListener";
+import { InputContext } from "../../providers/KeyboardListenerV2";
+// import { InputContext } from "../../providers/KeyboardListener";
 
 const Interface: React.FC<T_Interface> = ({ label, children, width, height, onClick, onHover }) => {
     const { subscribe, unsubscribe } = useContext(InputContext);
-    const react = useCallback((key: string) => key === "a" && console.log("react !"), []);
-    const arrowUp = useCallback((key: string) => key === "ArrowUp" && console.log("Up !"), []);
-    const arrowDown = useCallback((key: string) => key === "ArrowDown" && console.log("Down !"), []);
-    const arrowLeft = useCallback((key: string) => key === "ArrowLeft" && console.log("Left !"), []);
-    const arrowRight = useCallback((key: string) => key === "ArrowRight" && console.log("Right !"), []);
+    const react = useCallback((event: KeyboardEvent) => console.log("react !", event), []);
             
     useEffect(() => {
         console.log("Subscribe")
-        subscribe(react, arrowUp, arrowDown, arrowLeft, arrowRight);
-        return () => unsubscribe(react, arrowUp, arrowDown, arrowLeft, arrowRight);
+        subscribe("a", react);
+        return () => unsubscribe("a", react);
     }, [subscribe, unsubscribe]);
 
     return (
