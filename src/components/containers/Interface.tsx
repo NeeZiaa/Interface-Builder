@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect } from "react";
 import { T_Interface } from "../../types/components/containers/InterfaceTypes"
 import Title from "../display/Title";
-import { InputContext } from "../../KeyboardListener";
+import { InputContext } from "../../providers/KeyboardListener";
 
 const Interface: React.FC<T_Interface> = ({ label, children, width, height, onClick, onHover }) => {
     const { subscribe, unsubscribe } = useContext(InputContext);

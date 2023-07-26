@@ -1,26 +1,11 @@
+
 import { Context, ReactNode, createContext, useEffect, useState, useCallback } from "react";
-type Reaction = (key: string) => void;
-type ReactionArray = ((key: string) => void)[];
-type NullableReactionArray = ReactionArray | null;
-type SubscriberCallback = (reaction: Reaction) => void;
-type NullableSubscriberCallback = SubscriberCallback | null;
+import { InputContextType, NullableInputContextType, ReactionArray, ReactionObject } from "../types/providers/KeyboardListenerTypes";
 
-interface InputContextTypeNullable {
-  reactions: NullableReactionArray;
-  subscribe: NullableSubscriberCallback;
-  unsubscribe: NullableSubscriberCallback;
-}
-
-interface InputContextType {
-  reactions: ReactionArray;
-  subscribe: SubscriberCallback;
-  unsubscribe: SubscriberCallback;
-}
-
-export const InputContext = createContext<InputContextTypeNullable>({ reactions: null, subscribe: null, unsubscribe: null }) as Context<InputContextType>;
+export const InputContext = createContext<NullableInputContextType>({ reactions: null, subscribe: null, unsubscribe: null }) as Context<InputContextType>;
 
 export default function KeyboardListener({ children }: { children: ReactNode }) {
-  const [reactions, setReactions] = useState<ReactionArray>([]);
+  const [reactions, setReactions] = useState<ReactionObject>({});
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -58,23 +43,9 @@ export default function KeyboardListener({ children }: { children: ReactNode }) 
         }      
         setReactions(reactions);
       }    
-    }         
+    }
     console.log("Unsubscribe 2", reactions);
   };
-
-  // const unsubscribe = (...callbacks: ReactionArray) => {
-  //   setReactions((prevReactions) => {
-  //     const newReactions = [...prevReactions];
-  //     for (const callback of callbacks) {
-  //       for (const r of newReactions) {
-  //         if (r === callback) {
-  //           newReactions.splice(newReactions.indexOf(r), 1);
-  //         }
-  //       }
-  //     }
-  //     return newReactions;
-  //   });
-  // };
 
   useEffect(() => {
     window.addEventListener("keydown", onKeyDown);
