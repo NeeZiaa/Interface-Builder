@@ -10,10 +10,8 @@ export default function KeyboardListener({ children }: { children: ReactNode }) 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
       console.log("onKeyDown", e.key);
-      console.log(reactions);
       if (reactions[e.key] === undefined) return;
       for (const r of reactions[e.key]) r(e);
-    //   for (const r of reactions) r(e.key);
     },
     [reactions]
   );
@@ -27,6 +25,7 @@ export default function KeyboardListener({ children }: { children: ReactNode }) 
       return;
     }
     for (const callback of callbacks) {
+      if(reactions[key] === undefined) return;
       for (const r of reactions[key]) {
         if (r === callback) return;
       }
@@ -38,7 +37,6 @@ export default function KeyboardListener({ children }: { children: ReactNode }) 
     for (const callback of callbacks) {
       if(reactions[key] === undefined) return;
       for (const r of reactions[key]) {
-        console.log(callback, r)
         if (r === callback) {
           reactions[key].splice(reactions[key].indexOf(r), 1);
         }      

@@ -1,21 +1,20 @@
 import { useCallback, useContext, useEffect } from "react";
 import { T_Interface } from "../../types/components/containers/InterfaceTypes"
 import Title from "../display/Title";
-import { InputContext } from "../../providers/KeyboardListenerV2";
-// import { InputContext } from "../../providers/KeyboardListener";
+import { InputContext } from "../../providers/KeyboardListener";
+import { focusOut } from "../../utils/focus";
 
 const Interface: React.FC<T_Interface> = ({ label, children, width, height, onClick, onHover }) => {
     const { subscribe, unsubscribe } = useContext(InputContext);
-    const react = useCallback((event: KeyboardEvent) => console.log("react !", event), []);
-            
+    const onKeyEscape = useCallback(focusOut, []);
+
     useEffect(() => {
-        console.log("Subscribe")
-        subscribe("a", react);
-        return () => unsubscribe("a", react);
+        subscribe("Escape", onKeyEscape);
+        return () => unsubscribe("Escape", onKeyEscape);
     }, [subscribe, unsubscribe]);
 
     return (
-        <div 
+        <div
             className="interface-container" 
             style={{ width, height }} 
             onClick={(e) => {

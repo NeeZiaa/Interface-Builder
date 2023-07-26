@@ -7,7 +7,7 @@ interface CallbackProps {
 
 const sendCallback = ({name, data}: CallbackProps) => {
     postFetch({
-        url: String(process.env.REACT_APP_API_URL),
+        url: String(import.meta.env.VITE_APP_API_URL),
         body: {
             name,
             data: data ? JSON.stringify(data) : []

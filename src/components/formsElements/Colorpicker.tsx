@@ -1,4 +1,4 @@
-import { T_ColorPicker } from "../../types/components/formElements/ColorPicker";
+import { T_ColorPicker } from "../../types/components/formElements/ColorPickerTypes";
 
 const Colorpicker: React.FC<T_ColorPicker> = ( {label, name, defaultColor, onChange }) => {
     return (

@@ -1,7 +1,7 @@
 interface I_Form {
     title?: string,    
     children: React.ReactNode;
-    onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+    onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
     onReset?: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 

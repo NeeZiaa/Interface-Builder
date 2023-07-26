@@ -1,7 +1,7 @@
 const Button: React.FC<T_Button> = ({ label, type="button", disabled=false, onClick }) => {
     return (
         <button 
-            type="submit" 
+            type={type} 
             disabled={disabled} 
             onClick={onClick}>
             {label}

@@ -1,4 +1,4 @@
-const soundPath = process.env.REACT_APP_SOUNDS_PATH
+const soundPath = import.meta.env.VITE_APP_SOUNDS_PATH
 
 export const play = (sound: string) => {
     const audio = new Audio(`${soundPath}/${sound}.mp3`)
