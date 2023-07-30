@@ -42,9 +42,11 @@
                     "title": "Premier item",
                     "description": "10€",
                     "button": {
-                        "display": "Acheter",
-                        "callback": "buy_item",
-                        "style": ["dark", "rounded"]
+                        "props": {
+                            "display": "Acheter",
+                            "callback": "buy_item",
+                            "style": ["dark", "rounded"]
+                        }
                     },
                     "select": {
                         "options": {
@@ -57,9 +59,30 @@
                 }
             ]
         },
+        "field": {
+            "props": {
+                "label": "Field",
+                "icon": "Icon",
+                "style": ["light", "transparent"],
+                "callback": "field_callback"
+            },
+            "input": {
+                "props": {
+                    "placeholder": "Placeholder",
+                    "value": "Value"
+                }
+            }
+        },
+        "form": {
+            "input": {
+
+            }
+        },
         "footer": {
-            "description": "Copyright 2023...",
-            "image": "assets/image_test.png"
+            "props": {
+                "description": "Copyright &copy 2023...",
+                "image": "assets/image_test.png"
+            }
         }        
     }
 }
