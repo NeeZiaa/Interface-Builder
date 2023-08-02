@@ -1,7 +1,6 @@
 interface I_Radio {
     name: string;
     value: string;
-    label: string;
     checked?: boolean;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -13,7 +12,7 @@ interface I_RadioGroup {
 }
 
 type T_Radio = I_Radio;
-type T_RadioRequired = Pick<T_Radio, 'value' | 'label'>;
+type T_RadioRequired = Pick<T_Radio, 'value'>;
 type T_RadioOptional = Omit<T_Radio, keyof T_RadioRequired>;
 
 type T_RadioGroup = I_RadioGroup;

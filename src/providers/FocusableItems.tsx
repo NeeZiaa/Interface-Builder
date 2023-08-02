@@ -8,22 +8,22 @@ type NullableSubscriberCallback = SubscriberCallback | null;
 
 interface FocusableItemsTypeNullable {
     items: NullableFocusableItemArray;
-    subscribe: NullableSubscriberCallback;
-    unsubscribe: NullableSubscriberCallback;
+    add: NullableSubscriberCallback;
+    remove: NullableSubscriberCallback;
 }
 
 interface FocusableItemsType {
     items: FocusableItem[] | null;
-    subscribe: (item: FocusableItem) => void;
-    unsubscribe: (item: FocusableItem) => void;
+    add: (item: FocusableItem) => void;
+    remove: (item: FocusableItem) => void;
 }
 
-export const focusableItems = createContext<FocusableItemsTypeNullable>({ items: null, subscribe: null, unsubscribe: null }) as Context<FocusableItemsType>;
+export const FocusableContext = createContext<FocusableItemsTypeNullable>({ items: null, add: null, remove: null }) as Context<FocusableItemsType>;
 
-export default function FocusableItems({ children }: { children: React.ReactNode }) {
+export default function FocusableMenu({ children }: { children: React.ReactNode }) {
     const [items, setItems] = useState<FocusableItemArray>([]);
 
-    const subscribe = (item: FocusableItem) => {
+    const add = (item: FocusableItem) => {
         if (items.length === 0) {
             setItems([item]);
             return;
@@ -34,7 +34,7 @@ export default function FocusableItems({ children }: { children: React.ReactNode
         setItems((i) => [...i, item]);
     };
 
-    const unsubscribe = (item: FocusableItem) => {
+    const remove = (item: FocusableItem) => {
         setItems((prevItems) => {
             const newItems = [...prevItems];
             for (const i of newItems) {
@@ -46,5 +46,5 @@ export default function FocusableItems({ children }: { children: React.ReactNode
         });
     };
 
-    return <focusableItems.Provider value={{ items, subscribe, unsubscribe }}>{children}</focusableItems.Provider>;
+    return <FocusableContext.Provider value={{ items, add, remove }}>{children}</FocusableContext.Provider>;
 }

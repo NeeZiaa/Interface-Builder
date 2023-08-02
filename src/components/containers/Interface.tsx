@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { T_Interface } from "../../types/components/containers/InterfaceTypes"
 import Title from "../display/Title";
 import { InputContext } from "../../providers/KeyboardListener";
@@ -11,7 +11,30 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height, onCl
     useEffect(() => {
         subscribe("Escape", onKeyEscape);
         return () => unsubscribe("Escape", onKeyEscape);
-    }, [subscribe, unsubscribe]);
+    }, [onKeyEscape, subscribe, unsubscribe]);
+
+
+    const items = useRef(null);
+
+    const [focused, setFocused] = useState(null as unknown | HTMLElement | null | undefined | any);
+
+    console.log("items", items.current);    
+    
+    useEffect(() => {
+        const itemsList = items.current as HTMLDivElement | null;
+        console.log("itemsList", itemsList);
+        if (itemsList) {
+            itemsList.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                    if(itemsList.firstChild) {
+                        console.log(itemsList.firstChild)
+                        itemsList.firstChild.focus();
+                    }
+                }
+            });
+        }
+    }, [items]);
+
 
     return (
         <div
@@ -22,9 +45,15 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height, onCl
             }}
             onMouseEnter={(e) => {
                 onHover && onHover(e);
-            }}>
+            }}
+        >
             <Title>{label}</Title>
-            {children}
+            <div 
+                className="fields-wrapper" 
+                ref={items}
+            >
+                {children}
+            </div>
         </div>
     )
 }
