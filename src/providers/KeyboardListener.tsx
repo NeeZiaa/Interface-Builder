@@ -20,17 +20,15 @@ export default function KeyboardListener({ children }: { children: ReactNode }) 
   // Include ne marche pas avec les fonctions
   // Comparaison des addresses mémoires des fonctions
   const subscribe: SubscriberCallback = (key: string, ...callbacks: ReactionArray) => {
-    if(reactions[key] === undefined && Object.keys(reactions).length === 0) {
-      setReactions({ ...reactions, [key]: callbacks });
-      return;
-    }
-    for (const callback of callbacks) {
-      if(reactions[key] === undefined) return;
-      for (const r of reactions[key]) {
-        if (r === callback) return;
+    setReactions((r) => {
+      if(r[key] === undefined) return {...r, [key]: [...callbacks]};
+      for (const callback of callbacks) {
+        for (const re of r[key]) {
+          if (re === callback) return r;
+        }
       }
-    }
-    setReactions((r) => ({...r, [key]: [...r[key], ...callbacks]}));
+      return {...r, [key]: [...r[key], ...callbacks]};
+    });
   };
 
   const unsubscribe: SubscriberCallback = (key: string, ...callbacks: ReactionArray) => {

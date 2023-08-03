@@ -1,5 +1,5 @@
 interface I_FormElement {
-    id: number;
+    id?: number;
     icon: string;
     label: string;
     children: React.ReactNode;

@@ -1,11 +1,14 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { Children, createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { T_Interface } from "../../types/components/containers/InterfaceTypes"
 import Title from "../display/Title";
 import { InputContext } from "../../providers/KeyboardListener";
 import { focusOut } from "../../utils/focus";
+import { on } from "events";
 
 const Interface: React.FC<T_Interface> = ({ label, children, width, height, onClick, onHover }) => {
+    
     const { subscribe, unsubscribe } = useContext(InputContext);
+
     const onKeyEscape = useCallback(focusOut, []);
 
     useEffect(() => {
@@ -13,28 +16,39 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height, onCl
         return () => unsubscribe("Escape", onKeyEscape);
     }, [onKeyEscape, subscribe, unsubscribe]);
 
+    const childrenCount = Children.count(children);
 
-    const items = useRef(null);
+    const [focusedItem, setFocusedItem] = useState(1);
+  
+    const onKeyArrowUp = useCallback(() => {
+        setFocusedItem((prev) => {
+            if(prev - 1 === 0) return prev;
+            return prev - 1
+        });
+    }, [])
+  
+    const onKeyArrowDown = useCallback(() => {
+        setFocusedItem((prev) => {
+            if(prev + 1 > childrenCount) return prev;
+            return prev + 1
+        });
+    }, []);
 
-    const [focused, setFocused] = useState(null as unknown | HTMLElement | null | undefined | any);
-
-    console.log("items", items.current);    
-    
     useEffect(() => {
-        const itemsList = items.current as HTMLDivElement | null;
-        console.log("itemsList", itemsList);
-        if (itemsList) {
-            itemsList.addEventListener("keydown", (e) => {
-                if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                    if(itemsList.firstChild) {
-                        console.log(itemsList.firstChild)
-                        itemsList.firstChild.focus();
-                    }
-                }
-            });
-        }
-    }, [items]);
+        const focusedElement = document.querySelector(`.field-element:nth-child(${focusedItem}) .field__input`)?.firstChild as HTMLElement;
+        focusedElement?.focus();
+    }, [focusedItem]);
 
+    useEffect(() => {
+        subscribe('ArrowUp', onKeyArrowUp);
+        subscribe('ArrowDown', onKeyArrowDown);
+        return () => {
+            unsubscribe('ArrowUp', onKeyArrowUp);
+            unsubscribe('ArrowDown', onKeyArrowDown);
+        }
+    }, [onKeyArrowUp, onKeyArrowDown, subscribe, unsubscribe]);
+
+    const FocusedItemContext = createContext(focusedItem);
 
     return (
         <div
@@ -50,7 +64,6 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height, onCl
             <Title>{label}</Title>
             <div 
                 className="fields-wrapper" 
-                ref={items}
             >
                 {children}
             </div>

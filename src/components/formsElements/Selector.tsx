@@ -1,25 +1,45 @@
-import { useEffect } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { T_Selector } from "../../types/components/formElements/SelectorTypes";
+import KeyboardListener, { InputContext } from "../../providers/KeyboardListener";
 
 const Selector: React.FC<T_Selector> = ({
-    name, options, disabled=false, onChange = () => { return }, setSelected = () => { return }
+    name, options, disabled=false, onChange = () => { return; }
 }) => {
 
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log("Selected item : ", e.target.value);
-        setSelected(e.target.value);
-        onChange(e);
-    }
+    // const focusedItem = useContext(FocusedItemContext);
+
+    const {subscribe, unsubscribe} = useContext(InputContext);
+
+    const defaultSelected = options.findIndex((option) => option.selected === true);
+
+    const [selected, setSelected] = useState(defaultSelected);
+
+    const onKeyArrowLeft = useCallback(() => {
+        setSelected((prev) => {
+            if(prev === 0) return prev
+            return prev - 1;
+        })
+    }, [])
+
+    const onKeyArrowRight = useCallback(() => {
+        setSelected((prev) => {
+            if(prev === options.length - 1) return prev
+            return prev + 1;
+        })
+    }, [])
+
+    useEffect(() => {
+        subscribe("ArrowLeft", onKeyArrowLeft);
+        subscribe("ArrowRight", onKeyArrowRight);
+        return () => {
+            unsubscribe("ArrowLeft", onKeyArrowLeft);
+            unsubscribe("ArrowRight", onKeyArrowRight);
+        }
+    }, [subscribe, unsubscribe, onKeyArrowLeft, onKeyArrowRight]);
 
     return (
-        <select name={name} onChange={handleChange} disabled={disabled}>
-            {options.map((option, index) => {
-                return (
-                    <option key={index} value={option.value} selected={option.selected}>{option.label}</option>
-                );
-            })}
-        </select>  
-    );
+        <div className="selector-container">{options[selected].label}</div>
+    )
 }
 
 export default Selector;
