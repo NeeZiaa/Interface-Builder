@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { T_Selector } from "../../types/components/formElements/SelectorTypes";
 import KeyboardListener, { InputContext } from "../../providers/KeyboardListener";
 
@@ -14,7 +14,10 @@ const Selector: React.FC<T_Selector> = ({
 
     const [selected, setSelected] = useState(defaultSelected);
 
+    const element = useRef(null);
+
     const onKeyArrowLeft = useCallback(() => {
+        if(element.current !== document.activeElement) return;
         setSelected((prev) => {
             if(prev === 0) return prev
             return prev - 1;
@@ -22,6 +25,7 @@ const Selector: React.FC<T_Selector> = ({
     }, [])
 
     const onKeyArrowRight = useCallback(() => {
+        if(element.current !== document.activeElement) return;
         setSelected((prev) => {
             if(prev === options.length - 1) return prev
             return prev + 1;
@@ -38,7 +42,7 @@ const Selector: React.FC<T_Selector> = ({
     }, [subscribe, unsubscribe, onKeyArrowLeft, onKeyArrowRight]);
 
     return (
-        <div className="selector-container">{options[selected].label}</div>
+        <div className="selector-container" ref={element} tabIndex={0}>{options[selected].label}</div>
     )
 }
 

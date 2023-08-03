@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect } from "react";
 import { InputContext } from "../../providers/KeyboardListener";
 import { T_FormElement } from "../../types/components/formElements/FormElementTypes";
 import { postFetch } from "../../utils/postFetch";
+import { Icon } from '@iconify-icon/react';
 import React from "react";
 
 const Field: React.FC<T_FormElement> = ({ id, icon, label, children }) => {
@@ -29,7 +30,7 @@ const Field: React.FC<T_FormElement> = ({ id, icon, label, children }) => {
     return (
         <div className="field-element" id={id ? id.toString() : ""}>
             <div className="field__label">
-                {icon && <div className="field__icon">{icon}</div>}
+                {icon && <div className="field__icon"><Icon icon="mdi-light:alert" /></div>}
                 <div className="field__text">{label}</div>
             </div>
             <div className="field__input">{children}</div>

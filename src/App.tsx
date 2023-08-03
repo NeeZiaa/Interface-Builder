@@ -18,6 +18,9 @@ function App() {
         <Field icon={'test'} label={'Hello'}>
           <Selector name={'test'} options={[{label: 'test', value: 'test', selected: false}, {label: 'test2', value: 'test2', selected: true}]}></Selector>
         </Field>
+        <Field icon={'test'} label={'Hello'}>
+          <input type="range" name="volume" min="0" max="100"></input>
+        </Field>
       </Interface>
   )
 }
