@@ -36,7 +36,12 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height, onCl
 
     useEffect(() => {
         const focusedElement = document.querySelector(`.field-element:nth-child(${focusedItem}) .field__input`)?.firstChild as HTMLElement;
+        const focusedField = document.querySelector(`.field-element:nth-child(${focusedItem})`) as HTMLElement;
         focusedElement?.focus();
+        focusedField.classList.add('focused');
+        return () => {
+            focusedField.classList.remove('focused');
+        }
     }, [focusedItem]);
 
     useEffect(() => {
