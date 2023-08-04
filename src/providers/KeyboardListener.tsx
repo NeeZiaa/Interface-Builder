@@ -19,7 +19,7 @@ export default function KeyboardListener({ children }: { children: ReactNode }) 
   // Vérification de la présence de la réaction dans le tableau
   // Include ne marche pas avec les fonctions
   // Comparaison des addresses mémoires des fonctions
-  const subscribe: SubscriberCallback = (key: string, ...callbacks: ReactionArray) => {
+  const subscribe: SubscriberCallback = (key, ...callbacks) => {
     setReactions((r) => {
       if(r[key] === undefined) return {...r, [key]: [...callbacks]};
       for (const callback of callbacks) {
@@ -31,7 +31,7 @@ export default function KeyboardListener({ children }: { children: ReactNode }) 
     });
   };
 
-  const unsubscribe: SubscriberCallback = (key: string, ...callbacks: ReactionArray) => {
+  const unsubscribe: SubscriberCallback = (key, ...callbacks) => {
     for (const callback of callbacks) {
       if(reactions[key] === undefined) return;
       for (const r of reactions[key]) {

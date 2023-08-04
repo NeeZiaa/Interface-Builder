@@ -3,8 +3,6 @@ interface I_Interface {
     children: React.ReactNode;
     width?: string;
     height?: string;
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    onHover?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 type T_Interface = I_Interface;

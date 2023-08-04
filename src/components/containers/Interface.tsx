@@ -1,11 +1,13 @@
-import { Children, createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { Children, createContext, useCallback, useContext, useEffect, useState } from "react";
 import { T_Interface } from "../../types/components/containers/InterfaceTypes"
 import Title from "../display/Title";
 import { InputContext } from "../../providers/KeyboardListener";
 import { focusOut } from "../../utils/focus";
-import { on } from "events";
+import { InterfaceContextProvider } from "../../providers/InterfaceFields";
 
-const Interface: React.FC<T_Interface> = ({ label, children, width, height, onClick, onHover }) => {
+export const InterfaceContext = createContext({});
+
+const Interface: React.FC<T_Interface> = ({ label, children, width, height} ) => {
     
     const { subscribe, unsubscribe } = useContext(InputContext);
 
@@ -35,10 +37,13 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height, onCl
     }, []);
 
     useEffect(() => {
+
         const focusedElement = document.querySelector(`.field-element:nth-child(${focusedItem}) .field__input`)?.firstChild as HTMLElement;
         const focusedField = document.querySelector(`.field-element:nth-child(${focusedItem})`) as HTMLElement;
         focusedElement?.focus();
         focusedField.classList.add('focused');
+        // sendCallback({ type: 'focused', data: focusedItem });
+
         return () => {
             focusedField.classList.remove('focused');
         }
@@ -53,26 +58,20 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height, onCl
         }
     }, [onKeyArrowUp, onKeyArrowDown, subscribe, unsubscribe]);
 
-    const FocusedItemContext = createContext(focusedItem);
-
     return (
-        <div
-            className="interface-container" 
-            style={{ width, height }} 
-            onClick={(e) => {
-                onClick && onClick(e); 
-            }}
-            onMouseEnter={(e) => {
-                onHover && onHover(e);
-            }}
-        >
-            <Title>{label}</Title>
-            <div 
-                className="fields-wrapper" 
+        <InterfaceContextProvider>
+            <div
+                className="interface-container" 
+                style={{ width, height }} 
             >
-                {children}
+                <Title>{label}</Title>
+                <div 
+                    className="fields-wrapper" 
+                >
+                    {children}
+                </div>
             </div>
-        </div>
+        </InterfaceContextProvider>
     )
 }
 

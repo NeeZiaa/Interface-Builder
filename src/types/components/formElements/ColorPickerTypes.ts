@@ -1,5 +1,4 @@
 export interface I_ColorPicker {
-    label?: string,
     name: string,
     defaultColor?: string,
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void

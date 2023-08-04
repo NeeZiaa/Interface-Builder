@@ -1,29 +1,31 @@
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect, useRef } from "react";
 import { T_Checkbox } from "../../types/components/formElements/CheckBoxTypes";
 import { InputContext } from "../../providers/KeyboardListener";
 
 const Checkbox: React.FC<T_Checkbox> = ({
-    name, value, onCheck, checked=false
+    name, onCheck, checked=false
 }) => {
 
     const {subscribe, unsubscribe} = useContext(InputContext);
 
+    const checkboxRef = useRef<HTMLInputElement>(null);
+
     const onKeyEnter = useCallback(() => {
-        console.log("onKeyEnter");
-    }, []);
+        if(checkboxRef.current) {
+            checkboxRef.current.click();
+        }
+    }, [checkboxRef]);
 
     useEffect(() => {
-        subscribe("Enter", onCheck);
-        return () => unsubscribe("Enter", onCheck);
-    }, [onCheck, subscribe, unsubscribe]);
+        subscribe("Enter", onKeyEnter);
+        return () => unsubscribe("Enter", onKeyEnter);
+    }, [onKeyEnter, subscribe, unsubscribe]);
 
     return (
         <input 
             type="checkbox" 
-            name={name}
-            onChange={onCheck} 
-            checked={checked} 
-            value={value} 
+            name={name} 
+            ref={checkboxRef}
         />
     );
 }
