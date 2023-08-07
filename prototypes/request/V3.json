@@ -66,8 +66,9 @@
                 "style": ["light", "transparent"],
                 "callback": "field_callback"
             },
-            "input": {
+            "textfield": {
                 "props": {
+                    "name": "Name",
                     "placeholder": "Placeholder",
                     "value": "Value"
                 }

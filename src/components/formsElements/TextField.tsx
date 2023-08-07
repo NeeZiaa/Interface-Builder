@@ -12,7 +12,7 @@ const TextField: React.FC<T_TextField> = ({
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange && onChange(event);
-        if(type === "email") checkRegexEmail(event.target.value) ? play("success") : play("error");
+        // if(type === "email") checkRegexEmail(event.target.value) ? play("success") : play("error");
     }
 
     return (

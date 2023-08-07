@@ -1,6 +1,6 @@
 
 import { Context, ReactNode, createContext, useEffect, useState, useCallback } from "react";
-import { InputContextType, NullableInputContextType, ReactionArray, ReactionObject, SubscriberCallback } from "../types/providers/KeyboardListenerTypes";
+import { InputContextType, NullableInputContextType, ReactionObject, SubscriberCallback } from "../types/providers/KeyboardListenerTypes";
 
 export const InputContext = createContext<NullableInputContextType>({ subscribe: null, unsubscribe: null }) as Context<InputContextType>;
 

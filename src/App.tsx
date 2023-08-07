@@ -11,16 +11,16 @@ function App() {
   return (
       <Interface label={'Hello'}>
         <Field icon={'test'} label={'Hello'}>
-          <TextField name={'email'} type={'email'}></TextField>
+          <TextField name={'email'} type={'email'}/>
         </Field>
         <Field icon={'test'} label={'Hello'}>
-          <TextField name={'email'} type={'email'}></TextField>
+          <TextField name={'emailtest'} type={'email'}/>
         </Field>
         <Field icon={'test'} label={'Hello'}>
-          <Selector name={'test'} options={[{label: 'test', value: 'test', selected: false}, {label: 'test2', value: 'test2', selected: true}]}></Selector>
+          <Selector name={'test1'} options={[{label: 'test', value: 'test', selected: false}, {label: 'test2', value: 'test2', selected: true}]}/>
         </Field>
         <Field icon={'test'} label={'Hello'}>
-          <Checkbox name={'test'} value={'test'}/>
+          <Checkbox name={'test2'} value={'test'}/>
         </Field>
       </Interface>
   )
