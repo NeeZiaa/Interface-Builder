@@ -1,31 +1,24 @@
-import React, { useState, createContext, useEffect, Context, useContext, useCallback, useRef } from 'react';
+import React, { createContext, useEffect, Context, useContext, useCallback, useRef } from 'react';
 import { KeyboardEventListener } from './KeyboardListener';
-import sendCallback from '../utils/sendCallback';
 import { EventContext } from './EventListener';
 
 type T_AddField = (field: string) => void
 type T_DeleteField = (field: string) => void
-type T_FieldsArray = string[]
 
-type T_InterfaceFieldsContext = {
+type T_FieldsManagerContext = {
     addField: T_AddField,
     deleteField: T_DeleteField
 }
 
-type T_NullableInterfaceFieldsContext = {
+type T_NullableFieldsManagerContext = {
     addField: T_AddField | null,
     deleteField: T_DeleteField | null
 }
 
-type T_Listeners = {
-    [event: string]: [
-        (e: Event) => void
-    ]
-}
 
-const InterfaceFieldsContext = createContext<T_NullableInterfaceFieldsContext>({ addField: null, deleteField: null }) as Context<T_InterfaceFieldsContext>;
+const FieldsManagerContext = createContext<T_NullableFieldsManagerContext>({ addField: null, deleteField: null }) as Context<T_FieldsManagerContext>;
 
-const InterfaceContextProvider = ({ children }: { children: React.ReactNode }) => {
+const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
 
     const {subscribeKeyboardEvent, unsubscribeKeyboardEvent} = useContext(KeyboardEventListener);
 
@@ -49,14 +42,8 @@ const InterfaceContextProvider = ({ children }: { children: React.ReactNode }) =
     };
 
     const onKeyEnter = useCallback(() => {
-      // for (const field of fields.current) {
-      //   // const input = field.getElementsByTagName(`input`)[0];
-      //   if (input === document.activeElement) {
-      //     console.log('submit', input.value);
-      //     sendCallback({ type: 'submit', data: input.value })
-      //   }
-      // }
-    }, [fields]);
+        console.log('enter');
+    }, []);
 
     const onFocus = useCallback(() => {
         console.log('focus');
@@ -73,8 +60,8 @@ const InterfaceContextProvider = ({ children }: { children: React.ReactNode }) =
         for (const field of fields.current) {
             const input = document.getElementsByName(field)[0] as HTMLInputElement;
             if (!input) console.error(`Field ${field} not found`);      
+            
             subscribeEventListener({ event: 'focus', element: input, callback: onFocus });
-
             subscribeEventListener({ event: 'input', element: input, callback: onChange });
         }
 
@@ -94,13 +81,13 @@ const InterfaceContextProvider = ({ children }: { children: React.ReactNode }) =
     }, [fields]);
 
     return (
-        <InterfaceFieldsContext.Provider
+        <FieldsManagerContext.Provider
             value={{ addField, deleteField }}
         >
           {children}
-        </InterfaceFieldsContext.Provider>
+        </FieldsManagerContext.Provider>
     );
 
 };
 
-export { InterfaceFieldsContext, InterfaceContextProvider };
+export { FieldsManagerContext, FieldsManagerProvider };

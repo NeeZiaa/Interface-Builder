@@ -11,7 +11,7 @@ const Checkbox: React.FC<T_Checkbox> = ({
     const checkboxRef = useRef<HTMLInputElement>(null);
 
     const onKeyEnter = useCallback(() => {
-        if(checkboxRef.current) {
+        if(checkboxRef.current === document.activeElement && checkboxRef.current !== null) {
             checkboxRef.current.click();
         }
     }, [checkboxRef]);

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { Icon } from '@iconify-icon/react';
-import { InterfaceFieldsContext } from "../providers/InterfaceFields";
+import { FieldsManagerContext } from "../providers/FieldsManager";
 import { T_FormElement } from "../types/components/formElements/FormElementTypes";
 
 const Field: React.FC<T_FormElement> = ({ id, icon, label, children }) => {
 
-    const { addField } = useContext(InterfaceFieldsContext);
+    const { addField } = useContext(FieldsManagerContext);
 
     useEffect(() => {
         if (React.isValidElement(children)) {

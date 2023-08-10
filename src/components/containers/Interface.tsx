@@ -3,13 +3,16 @@ import { T_Interface } from "../../types/components/containers/InterfaceTypes"
 import Title from "../display/Title";
 import { KeyboardEventListener } from "../../providers/KeyboardListener";
 import { focusOut } from "../../utils/focus";
-import { InterfaceContextProvider } from "../../providers/InterfaceFields";
+import { FieldsManagerProvider } from "../../providers/FieldsManager";
+import { EventContext } from "../../providers/EventListener";
 
 export const InterfaceContext = createContext({});
 
 const Interface: React.FC<T_Interface> = ({ label, children, width, height} ) => {
     
     const { subscribeKeyboardEvent, unsubscribeKeyboardEvent } = useContext(KeyboardEventListener);
+
+    // const { subscribeEventListener, unsubscribeEventListener } = useContext(EventContext);
 
     const onKeyEscape = useCallback(focusOut, []);
 
@@ -36,14 +39,19 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height} ) =>
         });
     }, []);
 
+    // const onFocus = useCallback((e: Event) => {
+    //     const focusedElement = e.target as HTMLElement;
+    //     const focusedItem = document.querySelector(`.field-element:nth-child(${getNthChild(focusedElement)})`)?.firstChild as HTMLElement;
+    //     const position = getNthChild(focusedElement);
+    //     focusedItem.classList.add('focused');
+    //     setFocusedItem(position);
+    // }, []);
+
     useEffect(() => {
-
         const focusedElement = document.querySelector(`.field-element:nth-child(${focusedItem}) .field__input`)?.firstChild as HTMLElement;
-        const focusedField = document.querySelector(`.field-element:nth-child(${focusedItem})`) as HTMLElement;
+        const focusedField= document.querySelector(`.field-element:nth-child(${focusedItem})`)?.firstChild as HTMLElement;        
         focusedElement?.focus();
-        focusedField.classList.add('focused');
-        // sendCallback({ type: 'focused', data: focusedItem });
-
+        focusedField.classList.add('focused'); 
         return () => {
             focusedField.classList.remove('focused');
         }
@@ -52,6 +60,7 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height} ) =>
     useEffect(() => {
         subscribeKeyboardEvent('ArrowUp', onKeyArrowUp);
         subscribeKeyboardEvent('ArrowDown', onKeyArrowDown);
+        
         return () => {
             unsubscribeKeyboardEvent('ArrowUp', onKeyArrowUp);
             unsubscribeKeyboardEvent('ArrowDown', onKeyArrowDown);
@@ -59,7 +68,7 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height} ) =>
     }, [onKeyArrowUp, onKeyArrowDown, subscribeKeyboardEvent, unsubscribeKeyboardEvent]);
 
     return (
-        <InterfaceContextProvider>
+        <FieldsManagerProvider>
             <div
                 className="interface-container" 
                 style={{ width, height }} 
@@ -71,7 +80,7 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height} ) =>
                     {children}
                 </div>
             </div>
-        </InterfaceContextProvider>
+        </FieldsManagerProvider>
     )
 }
 

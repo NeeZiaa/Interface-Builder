@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useEffect, useState, useCallback, Context } from "react";
+import React, { createContext, ReactNode, useEffect, useState, Context } from "react";
 
 type EventCallback = (e: Event) => void;
 
@@ -20,9 +20,9 @@ type NullableEventContextType = {
     unsubscribeEventListener: subscribeEventListener | null;
 };
 
-export const EventContext = createContext<NullableEventContextType>({ subscribeEventListener: null, unsubscribeEventListener: null }) as Context<EventContextType>;
+const EventContext = createContext<NullableEventContextType>({ subscribeEventListener: null, unsubscribeEventListener: null }) as Context<EventContextType>;
 
-export default function EventListener({ children }: { children: ReactNode }) {
+const EventListener = ({ children }: { children: ReactNode }) => {
   const [eventListeners, setEventListeners] = useState<EventData[]>([]);
 
   const subscribeEventListener = (data: EventData) => {
@@ -59,3 +59,5 @@ export default function EventListener({ children }: { children: ReactNode }) {
 
   return <EventContext.Provider value={{ subscribeEventListener, unsubscribeEventListener }}>{children}</EventContext.Provider>;
 }
+
+export { EventListener, EventContext }
