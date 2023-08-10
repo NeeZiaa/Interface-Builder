@@ -6,13 +6,13 @@ type SubscriberCallback = (key: string, ...callback: ReactionArray) => void;
 type NullableSubscriberCallback = SubscriberCallback | null;
 
 interface NullableInputContextType {
-  subscribe: NullableSubscriberCallback;
-  unsubscribe: NullableSubscriberCallback;
+  subscribeKeyboardEvent: NullableSubscriberCallback;
+  unsubscribeKeyboardEvent: NullableSubscriberCallback;
 }
 
 interface InputContextType {
-  subscribe: SubscriberCallback;
-  unsubscribe: SubscriberCallback;
+  subscribeKeyboardEvent: SubscriberCallback;
+  unsubscribeKeyboardEvent: SubscriberCallback;
 }
 
 export type {

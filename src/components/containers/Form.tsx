@@ -9,11 +9,6 @@ const Form: React.FC<T_Form> = ({ title, onSubmit, onReset, children }) => {
         onSubmit && onSubmit(e);
     }
 
-    useEffect(() => {
-        // subscribe("Enter", onEnterKey);
-        // return () => unsubscribe("Enter", onEnterKey);
-    }, [subscribe, unsubscribe, onEnterKey]);
-
     return (
         <div className="form-container">
             {title && <h2>{title}</h2>}

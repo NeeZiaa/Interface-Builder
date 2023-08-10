@@ -1,12 +1,12 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { T_Selector } from "../../types/components/formElements/SelectorTypes";
-import KeyboardListener, { InputContext } from "../../providers/KeyboardListener";
+import KeyboardListener, { KeyboardEventListener } from "../../providers/KeyboardListener";
 
 const Selector: React.FC<T_Selector> = ({
     name, options, disabled=false, onChange = () => { return; }
 }) => {
 
-    const {subscribe, unsubscribe} = useContext(InputContext);
+    const {subscribeKeyboardEvent, unsubscribeKeyboardEvent} = useContext(KeyboardEventListener);
 
     const defaultSelected = options.findIndex((option) => option.selected === true);
 
@@ -35,13 +35,13 @@ const Selector: React.FC<T_Selector> = ({
     }, [])
 
     useEffect(() => {
-        subscribe("ArrowLeft", onKeyArrowLeft);
-        subscribe("ArrowRight", onKeyArrowRight);
+        subscribeKeyboardEvent("ArrowLeft", onKeyArrowLeft);
+        subscribeKeyboardEvent("ArrowRight", onKeyArrowRight);
         return () => {
-            unsubscribe("ArrowLeft", onKeyArrowLeft);
-            unsubscribe("ArrowRight", onKeyArrowRight);
+            unsubscribeKeyboardEvent("ArrowLeft", onKeyArrowLeft);
+            unsubscribeKeyboardEvent("ArrowRight", onKeyArrowRight);
         }
-    }, [subscribe, unsubscribe, onKeyArrowLeft, onKeyArrowRight]);
+    }, [subscribeKeyboardEvent, unsubscribeKeyboardEvent, onKeyArrowLeft, onKeyArrowRight]);
 
     return (
         <input className="selector-container" ref={element} tabIndex={1} name={name} value={options[selected].value} readOnly/>

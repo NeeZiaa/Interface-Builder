@@ -1,7 +1,7 @@
 import { Children, createContext, useCallback, useContext, useEffect, useState } from "react";
 import { T_Interface } from "../../types/components/containers/InterfaceTypes"
 import Title from "../display/Title";
-import { InputContext } from "../../providers/KeyboardListener";
+import { KeyboardEventListener } from "../../providers/KeyboardListener";
 import { focusOut } from "../../utils/focus";
 import { InterfaceContextProvider } from "../../providers/InterfaceFields";
 
@@ -9,14 +9,14 @@ export const InterfaceContext = createContext({});
 
 const Interface: React.FC<T_Interface> = ({ label, children, width, height} ) => {
     
-    const { subscribe, unsubscribe } = useContext(InputContext);
+    const { subscribeKeyboardEvent, unsubscribeKeyboardEvent } = useContext(KeyboardEventListener);
 
     const onKeyEscape = useCallback(focusOut, []);
 
     useEffect(() => {
-        subscribe("Escape", onKeyEscape);
-        return () => unsubscribe("Escape", onKeyEscape);
-    }, [onKeyEscape, subscribe, unsubscribe]);
+        subscribeKeyboardEvent("Escape", onKeyEscape);
+        return () => unsubscribeKeyboardEvent("Escape", onKeyEscape);
+    }, [onKeyEscape, subscribeKeyboardEvent, unsubscribeKeyboardEvent]);
 
     const childrenCount = Children.count(children);
 
@@ -50,13 +50,13 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height} ) =>
     }, [focusedItem]);
 
     useEffect(() => {
-        subscribe('ArrowUp', onKeyArrowUp);
-        subscribe('ArrowDown', onKeyArrowDown);
+        subscribeKeyboardEvent('ArrowUp', onKeyArrowUp);
+        subscribeKeyboardEvent('ArrowDown', onKeyArrowDown);
         return () => {
-            unsubscribe('ArrowUp', onKeyArrowUp);
-            unsubscribe('ArrowDown', onKeyArrowDown);
+            unsubscribeKeyboardEvent('ArrowUp', onKeyArrowUp);
+            unsubscribeKeyboardEvent('ArrowDown', onKeyArrowDown);
         }
-    }, [onKeyArrowUp, onKeyArrowDown, subscribe, unsubscribe]);
+    }, [onKeyArrowUp, onKeyArrowDown, subscribeKeyboardEvent, unsubscribeKeyboardEvent]);
 
     return (
         <InterfaceContextProvider>
