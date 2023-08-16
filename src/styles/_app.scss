@@ -1,17 +1,11 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.interface-container {
-    // display: flex;
-    // flex-direction: column;
-    // align-items: center;
-    // justify-content: center;
-    width: 50%;
-    background-color: gray;
-    padding: 20px;
+.interface {
+    background-color: $background-color;
+    width: 17vw;
+    height: fit-content;
+    max-height: 45vh;
+    margin: 2vw 0 1vw 2vw;
+    padding: 1vh 0vw 1vh 0vw;
+    border-radius: 0.5vw;
     position: absolute;
 
     .interface-container__title {

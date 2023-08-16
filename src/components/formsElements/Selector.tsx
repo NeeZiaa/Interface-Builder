@@ -1,9 +1,9 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { T_Selector } from "../../types/components/formElements/SelectorTypes";
-import KeyboardListener, { KeyboardEventListener } from "../../providers/KeyboardListener";
+import { KeyboardEventListener } from "../../providers/KeyboardListener";
 
 const Selector: React.FC<T_Selector> = ({
-    name, options, disabled=false, onChange = () => { return; }
+    name, options
 }) => {
 
     const {subscribeKeyboardEvent, unsubscribeKeyboardEvent} = useContext(KeyboardEventListener);
@@ -20,18 +20,18 @@ const Selector: React.FC<T_Selector> = ({
         if(element.current !== document.activeElement) return;
         setSelected((prev) => {
             if(prev === 0) return prev
+            element.current?.dispatchEvent(event);
             return prev - 1;
         })
-        element.current?.dispatchEvent(event);
     }, [])
 
     const onKeyArrowRight = useCallback(() => {
         if(element.current !== document.activeElement) return;
         setSelected((prev) => {
             if(prev === options.length - 1) return prev
+            element.current?.dispatchEvent(event);
             return prev + 1;
         })
-        element.current?.dispatchEvent(event);
     }, [])
 
     useEffect(() => {

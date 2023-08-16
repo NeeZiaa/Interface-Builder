@@ -1,4 +1,4 @@
-interface I_FormElement {
+interface I_Field {
     id?: number;
     icon: string;
     label: string;
@@ -9,6 +9,6 @@ interface I_FormElement {
     onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
-type T_FormElement = I_FormElement;
+type T_Field = I_Field;
 
-export type { T_FormElement }
+export type { T_Field}

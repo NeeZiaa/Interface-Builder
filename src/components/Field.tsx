@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { Icon } from '@iconify-icon/react';
 import { FieldsManagerContext } from "../providers/FieldsManager";
-import { T_FormElement } from "../types/components/formElements/FormElementTypes";
+import { T_Field } from "../types/components/formElements/FormElementTypes";
 
-const Field: React.FC<T_FormElement> = ({ id, icon, label, children }) => {
+const Field: React.FC<T_Field> = ({ id, icon, label, children }) => {
 
     const { addField } = useContext(FieldsManagerContext);
 
@@ -17,7 +17,7 @@ const Field: React.FC<T_FormElement> = ({ id, icon, label, children }) => {
     }, [addField, children]);
 
     return (
-        <div className="field-element" id={id ? id.toString() : ""}>
+        <div className="field" id={id ? id.toString() : ""}>
             <div className="field__label">
                 {icon && <div className="field__icon"><Icon icon="mdi-light:alert" /></div>}
                 <div className="field__text">{label}</div>

@@ -1,12 +1,13 @@
 const Header = () => {
     return (
-        <div className="header">
-            <div className="header__logo">
-                <img src="" alt="logo" />
-            </div>
-            <div className="header__title">
-                <h1>React Typescript</h1>
+        <div className="menu-header">
+            <div className="header-icon"></div>
+            <div className="header-label-container">
+                <h3>BurgerShot</h3>
+                <h4>RESTAURATION</h4>
             </div>
         </div>
     );
 }
+
+export default Header;

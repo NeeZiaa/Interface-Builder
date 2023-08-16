@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, Context, useContext, useCallback, useRef } from 'react';
+import React, { createContext, useEffect, Context, useContext, useCallback, useRef, useState, Children } from 'react';
 import { KeyboardEventListener } from './KeyboardListener';
 import { EventContext } from './EventListener';
 
@@ -24,8 +24,56 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
 
     const { subscribeEventListener, unsubscribeEventListener } = useContext(EventContext);
 
-    // const [fields, setFields] = useState<T_FieldsArray>([]);
     const fields = useRef<string[]>([]);
+
+    const [focusedItem, setFocusedItem] = useState(7);
+
+    const childrenCount = Children.toArray(children).filter(
+        (child) => child.type.name === 'Field'
+    ).length;
+  
+    const onKeyArrowUp = useCallback(() => {
+        setFocusedItem((prev) => {
+            if(prev - 1 === 0) return prev;
+            return prev - 1
+        });
+    }, [])
+  
+    const onKeyArrowDown = useCallback(() => {
+        setFocusedItem((prev) => {
+            if(prev + 1 > childrenCount) return prev;
+            return prev + 1
+        });
+    }, []);
+
+    useEffect(() => {        
+        // console.log('Children count: ', childrenCount)
+        const fieldsWrapper = document.querySelector('.fields-wrapper') as HTMLElement;
+        console.log(focusedItem)
+
+        const focusedElement = fieldsWrapper.querySelector(`.fields-wrapper .field:nth-child(${focusedItem}) .field__input`)?.firstChild as HTMLElement;
+        const focusedField= fieldsWrapper.querySelector(`.fields-wrapper .field:nth-child(${focusedItem})`) as HTMLElement;    
+        console.log(focusedElement, focusedField)
+        
+        if(!focusedElement || !focusedField) return;
+        focusedElement?.focus();
+        focusedField.classList.add('focused'); 
+        return () => {
+            focusedField.classList.remove('focused');
+        }
+    }, [focusedItem]);
+
+    useEffect(() => {
+        subscribeKeyboardEvent('ArrowUp', onKeyArrowUp);
+        subscribeKeyboardEvent('ArrowDown', onKeyArrowDown);
+        
+        return () => {
+            unsubscribeKeyboardEvent('ArrowUp', onKeyArrowUp);
+            unsubscribeKeyboardEvent('ArrowDown', onKeyArrowDown);
+        }
+    }, [onKeyArrowUp, onKeyArrowDown, subscribeKeyboardEvent, unsubscribeKeyboardEvent]);
+
+
 
     const addField: T_AddField = (field) => {
         // setFields((r) => {
@@ -54,7 +102,7 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     useEffect(() => {
-        console.log('Add listeners')
+        // console.log('Add listeners')
         subscribeKeyboardEvent('Enter', onKeyEnter);
       
         for (const field of fields.current) {
@@ -66,7 +114,7 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
         }
 
         return () => {
-            console.log('Remove listeners');
+            // console.log('Remove listeners');
             unsubscribeKeyboardEvent('Enter', onKeyEnter);
             
             for (const field of fields.current) {

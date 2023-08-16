@@ -1,0 +1,134 @@
+.interface {
+    background-color: $background-color;
+    width: 17vw;
+    height: fit-content;
+    max-height: 45vh;
+    margin: 2vw 0 1vw 2vw;
+    padding: 1vh 0vw 1vh 0vw;
+    border-radius: 0.5vw;
+    position: absolute;
+
+    .interface-container__title {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .top-right {
+        top: 20;
+        right: 20;
+    }
+
+    .top-center {
+        top: 20;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .top-left {
+        top: 20;
+        left: 20;
+    }
+
+    .center-right {
+        top: 50%;
+        right: 20;
+        transform: translateY(-50%);
+    }
+
+    .center-center {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .center-left {
+        top: 50%;
+        left: 20;
+        transform: translateY(-50%);
+    }
+
+    .bottom-right {
+        bottom: 20;
+        right: 20;
+    }
+
+    .bottom-center {
+        bottom: 20;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .bottom-left {
+        bottom: 20;
+        left: 20;
+    }
+}
+
+.menu-header {
+    margin: 0.25vw 0.5vw 0.75vw 1.05vw;
+    @include verticalCenter;
+  
+    .header-icon {
+        width: 1.5vw;
+        height: 1.5vw;
+        border-radius: 1vw;
+        margin-right: 0.5vw;
+        background: url(https://media.discordapp.net/attachments/1094358339028258937/1140256282343911474/fast-food.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+  
+    .header-label-container {
+        display: flex;
+        flex-direction: column;
+        color: white;
+    }
+  
+    h3 {
+        font-weight: 500;
+        font-size: 0.75vw;
+    }
+  
+    h4 {
+        font-weight: 500;
+        font-size: 0.5vw;
+        text-transform: uppercase;
+        letter-spacing: 0.075vw;
+    }
+}
+  
+
+.side-panel-container {
+    background-color: $background-color;
+    width: 17vw;
+    height: fit-content;
+    max-height: 45vh;
+    margin: 2vw;
+    padding: 1vh 0vw 1vh 0vw;
+    border-radius: 0.5vw;
+    color: $font-color;
+  
+    .side-panel-elements {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0.75vw;
+      
+        .side-panel-title {
+            font-weight: 400;
+            font-size: 0.55vw;
+        }
+      
+        .side-panel-info {
+            display: flex;
+            font-size: 0.65vw;
+            margin-top: 0.5vw;
+    
+            .side-panel-icon {
+                width: 1.1vw;
+                height: 1.1vw;
+                margin-right: 0.5vw;
+            }
+        }
+    }
+}

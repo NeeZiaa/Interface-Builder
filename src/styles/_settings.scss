@@ -1,0 +1,22 @@
+$font: "Poppins", sans-serif;
+
+$background-color: rgba(35, 37, 45, 0.95);
+$font-color: rgba(148, 148, 148, 1);
+$accent-color: #20C997;
+
+@mixin verticalCenter {
+  display: flex;
+  align-items: center;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: $font;
+  user-select: none;
+}
+
+body {
+  display: flex;
+}
