@@ -9,7 +9,6 @@ export default function KeyboardListener({ children }: { children: ReactNode }) 
 
     const onKeyDown = useCallback(
         (e: KeyboardEvent) => {
-            console.log("onKeyDown", e.key);
             if (reactions[e.key] === undefined) return;
             for (const r of reactions[e.key]) r(e);
         },

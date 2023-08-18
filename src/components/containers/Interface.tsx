@@ -27,7 +27,8 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height} ) =>
             className="interface" 
             style={{ width, height }} 
         >
-            <Title>{label}</Title>
+            {label && <Title>{label}</Title>}
+            
             <div 
                 className="fields-wrapper" 
             >

@@ -1,22 +1,24 @@
-import React, { createContext, useEffect, Context, useContext, useCallback, useRef, useState, Children } from 'react';
+import React, { createContext, useEffect, Context, useContext, useCallback, useRef, useState, Children, isValidElement } from 'react';
 import { KeyboardEventListener } from './KeyboardListener';
 import { EventContext } from './EventListener';
+import { filterRecursive } from '../utils/countChildren';
 
 type T_AddField = (field: string) => void
 type T_DeleteField = (field: string) => void
 
 type T_FieldsManagerContext = {
+    count: React.MutableRefObject<number>,
     addField: T_AddField,
     deleteField: T_DeleteField
 }
 
 type T_NullableFieldsManagerContext = {
+    count: React.MutableRefObject<number> | null,
     addField: T_AddField | null,
     deleteField: T_DeleteField | null
 }
 
-
-const FieldsManagerContext = createContext<T_NullableFieldsManagerContext>({ addField: null, deleteField: null }) as Context<T_FieldsManagerContext>;
+const FieldsManagerContext = createContext<T_NullableFieldsManagerContext>({ count: null, addField: null, deleteField: null }) as Context<T_FieldsManagerContext>;
 
 const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
 
@@ -26,12 +28,10 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
 
     const fields = useRef<string[]>([]);
 
-    const [focusedItem, setFocusedItem] = useState(7);
+    const [focusedItem, setFocusedItem] = useState(0);
 
-    const childrenCount = Children.toArray(children).filter(
-        (child) => child.type.name === 'Field'
-    ).length;
-  
+    const childrenCount = filterRecursive(children, (child) => isValidElement(child) && typeof child.type !== 'string' && child.type.name === 'Field').length;
+
     const onKeyArrowUp = useCallback(() => {
         setFocusedItem((prev) => {
             if(prev - 1 === 0) return prev;
@@ -46,22 +46,18 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
         });
     }, []);
 
-    useEffect(() => {        
-        // console.log('Children count: ', childrenCount)
-        const fieldsWrapper = document.querySelector('.fields-wrapper') as HTMLElement;
-        console.log(focusedItem)
-
-        const focusedElement = fieldsWrapper.querySelector(`.fields-wrapper .field:nth-child(${focusedItem}) .field__input`)?.firstChild as HTMLElement;
-        const focusedField= fieldsWrapper.querySelector(`.fields-wrapper .field:nth-child(${focusedItem})`) as HTMLElement;    
-        console.log(focusedElement, focusedField)
+    useEffect(() => {
+        const focusedInput = document.querySelector(`#field-${focusedItem} .field__input`)?.firstChild as HTMLElement;
+        const focusedField= document.querySelector(`#field-${focusedItem}`) as HTMLElement; 
         
-        if(!focusedElement || !focusedField) return;
-        focusedElement?.focus();
+        if(!focusedInput || !focusedField) return;
+        focusedInput?.focus();
         focusedField.classList.add('focused'); 
         return () => {
             focusedField.classList.remove('focused');
         }
     }, [focusedItem]);
+
 
     useEffect(() => {
         subscribeKeyboardEvent('ArrowUp', onKeyArrowUp);
@@ -73,19 +69,19 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }, [onKeyArrowUp, onKeyArrowDown, subscribeKeyboardEvent, unsubscribeKeyboardEvent]);
 
+    const count = useRef(0);
 
-
-    const addField: T_AddField = (field) => {
-        // setFields((r) => {
-        //   console.log('addField 2', r);
-        //   if (r.includes(field)) return r;
-        //   return [...r, field];
-        // });
-        if (fields.current.includes(field)) return;
+    const addField: T_AddField = (field) => {                
+        count.current++;
+        if (fields.current.includes(field)) { 
+            console.warn("Name must be unique ! Field not added"); 
+            return; 
+        }
         fields.current = [...fields.current, field];
     };
 
     const deleteField: T_DeleteField = (field) => {
+        count.current--;
         fields.current = fields.current.filter((e) => e !== field);
     };
 
@@ -93,44 +89,132 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
         console.log('enter');
     }, []);
 
+    const onClick = useCallback((e) => {
+        const parent = e.target?.parentElement.parentElement.id;
+        setFocusedItem(parseInt(parent.substring(6)));
+        console.log('click');
+    }, []);
+
     const onFocus = useCallback(() => {
         console.log('focus');
     }, []);
 
-    const onChange = useCallback(() => {
-        console.log('change');
+    return (
+        <FieldsManagerContext.Provider value={{ count, addField, deleteField }}>
+            {children}
+        </FieldsManagerContext.Provider>
+    );
+};
+
+export { FieldsManagerProvider, FieldsManagerContext };
+
+    const childrenCount = filterRecursive(children, (child) => isValidElement(child) && child.type.name === 'Field').length;
+
+    const onKeyArrowUp = useCallback(() => {
+        setFocusedItem((prev) => {
+            if(prev - 1 === 0) return prev;
+            return prev - 1
+        });
+    }, [])
+  
+    const onKeyArrowDown = useCallback(() => {
+        setFocusedItem((prev) => {
+            if(prev + 1 > childrenCount) return prev;
+            return prev + 1
+        });
     }, []);
 
     useEffect(() => {
-        // console.log('Add listeners')
+        const focusedInput = document.querySelector(`#field-${focusedItem} .field__input`)?.firstChild as HTMLElement;
+        const focusedField= document.querySelector(`#field-${focusedItem}`) as HTMLElement; 
+        
+        if(!focusedInput || !focusedField) return;
+        focusedInput?.focus();
+        focusedField.classList.add('focused'); 
+        return () => {
+            focusedField.classList.remove('focused');
+        }
+    }, [focusedItem]);
+
+
+    useEffect(() => {
+        subscribeKeyboardEvent('ArrowUp', onKeyArrowUp);
+        subscribeKeyboardEvent('ArrowDown', onKeyArrowDown);
+        
+        return () => {
+            unsubscribeKeyboardEvent('ArrowUp', onKeyArrowUp);
+            unsubscribeKeyboardEvent('ArrowDown', onKeyArrowDown);
+        }
+    }, [onKeyArrowUp, onKeyArrowDown, subscribeKeyboardEvent, unsubscribeKeyboardEvent]);
+
+    const count = useRef(0);
+
+    const addField: T_AddField = (field) => {                
+        count.current++;
+        if (fields.current.includes(field)) { 
+            console.warn("Name must be unique ! Field not added"); 
+            return; 
+        }
+        fields.current = [...fields.current, field];
+    };
+
+    const deleteField: T_DeleteField = (field) => {
+        count.current--;
+        fields.current = fields.current.filter((e) => e !== field);
+    };
+
+    const onKeyEnter = useCallback(() => {
+        console.log('enter');
+    }, []);
+
+    const onClick = useCallback((e) => {
+        const parent = e.target?.parentElement.parentElement.id;
+        setFocusedItem(parseInt(parent.substring(6)));
+        console.log('click');
+    }, []);
+
+    const onFocus = useCallback(() => {
+        console.log('focus');
+    }, []);
+
+    const onChange = useCallback((e) => {
+        let data = e.target.value;
+        if (e.target.type === 'checkbox') {
+            data = e.target.checked;
+        }
+        console.log('change', data);
+    }, []);
+
+    useEffect(() => {
+
         subscribeKeyboardEvent('Enter', onKeyEnter);
-      
+
         for (const field of fields.current) {
             const input = document.getElementsByName(field)[0] as HTMLInputElement;
             if (!input) console.error(`Field ${field} not found`);      
             
+            subscribeEventListener({ event: 'click', element: input, callback: onClick });
             subscribeEventListener({ event: 'focus', element: input, callback: onFocus });
             subscribeEventListener({ event: 'input', element: input, callback: onChange });
         }
 
         return () => {
-            // console.log('Remove listeners');
+            count.current = 0;
             unsubscribeKeyboardEvent('Enter', onKeyEnter);
             
             for (const field of fields.current) {
                 const input = document.getElementsByName(field)[0] as HTMLInputElement;
                 if (!input) console.error(`Field ${field} not found`);
-                unsubscribeEventListener({ event: 'focus', element: input, callback: () => {
-                    console.log('focus', input.value);
-                    // sendCallback({ type: 'focus', data: input.value });
-                }});
+                unsubscribeEventListener({ event: 'click', element: input, callback: onClick });
+                unsubscribeEventListener({ event: 'focus', element: input, callback: onFocus });
+                unsubscribeEventListener({ event: 'input', element: input, callback: onChange });
             }
         };
     }, [fields]);
 
     return (
         <FieldsManagerContext.Provider
-            value={{ addField, deleteField }}
+            value={{ count, addField, deleteField }}
         >
           {children}
         </FieldsManagerContext.Provider>

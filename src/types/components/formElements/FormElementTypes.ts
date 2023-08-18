@@ -1,5 +1,4 @@
 interface I_Field {
-    id?: number;
     icon: string;
     label: string;
     children: React.ReactNode;

@@ -38,7 +38,7 @@
         display: flex;
         align-items: center;
     
-        .field-title {
+        .field__title {
             margin-left: 0.75vw;
             font-weight: 400;
             font-size: 0.65vw;
@@ -54,12 +54,14 @@
     }
 }
   
-.checkbox {
+input[type=checkbox]{
     appearance: none;
     margin: 0;
     color: currentColor;
     width: 0.75vw;
     height: 0.75vw;
+    min-width: 20px;
+    min-height: 20px;
     border: 0.1vw solid currentColor;
     border-radius: 0.15vw;
     position: relative;
@@ -75,10 +77,11 @@
     &:checked::before {
         content: "\2713";
         font-size: 0.65vw;
+        font-size: 18px;
     }
 }
   
-.range-slider {
+input[type=range] {
     font-size: 0.8vw;
     width: 5vw;
     color: $accent-color;
@@ -163,8 +166,8 @@
         outline: none;
     }
 }
-  
-.color-picker {
+
+input[type=color] {
     appearance: none;
     -webkit-appearance: none;
     background: none;
