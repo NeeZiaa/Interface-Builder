@@ -1,15 +1,15 @@
 import { postFetch } from "./postFetch"
 
 interface CallbackProps {
-    name: string;
+    type: string;
     data?: unknown;
 }
 
-const sendCallback = ({name, data}: CallbackProps) => {
+const sendCallback = ({type, data}: CallbackProps) => {
     postFetch({
-        url: String(process.env.REACT_APP_API_URL),
+        url: String(import.meta.env.VITE_APP_API_URL),
         body: {
-            name,
+            type,
             data: data ? JSON.stringify(data) : []
         }
     })

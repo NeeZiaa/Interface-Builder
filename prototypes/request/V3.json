@@ -28,38 +28,26 @@
                 "style": ["light", "transparent"]
             }
         },
-        "itemsWrapper": {
-            "title": "Items",
-            "description": "Liste des items",
-            "button": {
-                "display": "Ajouter",
-                "callback": "add_item",
-                "style": ["dark", "rounded"]
+        "field": {
+            "props": {
+                "label": "Field",
+                "icon": "Icon",
+                "style": ["light", "transparent"],
+                "callback": "field_callback"
             },
-            "style": ["light", "transparent"],
-            "items": [
-                {
-                    "title": "Premier item",
-                    "description": "10€",
-                    "button": {
-                        "display": "Acheter",
-                        "callback": "buy_item",
-                        "style": ["dark", "rounded"]
-                    },
-                    "select": {
-                        "options": {
-                            "1": "1",
-                            "2": "2",
-                            "3": "3"
-                        }
-                    },
-                    "style": ["light", "transparent"]
+            "textfield": {
+                "props": {
+                    "name": "Name",
+                    "placeholder": "Placeholder",
+                    "value": "Value"
                 }
-            ]
+            }
         },
         "footer": {
-            "description": "Copyright 2023...",
-            "image": "assets/image_test.png"
+            "props": {
+                "description": "Copyright &copy 2023...",
+                "image": "assets/image_test.png"
+            }
         }        
     }
 }

@@ -10,17 +10,17 @@ const TextField: React.FC<T_TextField> = ({
 
     if(!AuthorizedTypes.includes(type)) throw new Error(`Input type ${type} is not supported`);
 
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        onChange && onChange(event);
+        // if(type === "email") checkRegexEmail(event.target.value) ? play("success") : play("error");
+    }
+
     return (
         <input 
             type={type}
             name={name}
             defaultValue={defaultValue}
-            onChange={
-                (event: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange && onChange(event);
-                    checkRegexEmail(event.target.value) ? play("success") : play("error");
-                }
-            }
+            onChange={handleChange}
             placeholder={placeholder}
             autoComplete={autoComplete ? 'on' : 'off'}
             disabled={disabled}

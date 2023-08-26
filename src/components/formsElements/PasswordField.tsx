@@ -2,7 +2,7 @@ import { T_PasswordField } from "../../types/components/formElements/PasswordFie
 import { checkRegexPassword } from "../../utils/regex";
 import { play } from "../../utils/sound";
 
-const TextField: React.FC<T_PasswordField> = ({ 
+const PasswordField: React.FC<T_PasswordField> = ({ 
     name, onChange, placeholder="", disabled=false
 }) => {
 
@@ -23,4 +23,4 @@ const TextField: React.FC<T_PasswordField> = ({
     );
 }
 
-export default TextField;
+export default PasswordField;

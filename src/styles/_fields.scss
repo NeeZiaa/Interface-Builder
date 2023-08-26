@@ -1,0 +1,270 @@
+.search-button {
+    margin: 0.3vw 0.5vw 0vw 0.5vw;
+    height: 2vw;
+    width: 94.1%;
+    border: 0.075vw solid #275b52;
+    background: rgba(26, 29, 36, 0.8);
+    border-radius: 0.25vw;
+    outline: none;
+    box-shadow: none;
+    color: $font-color;
+    font-size: 0.65vw;
+    caret-color: $accent-color;
+    padding-left: 2.5vw;
+    padding-right: 0.5vw;
+    background-image: url("https://cdn.discordapp.com/attachments/831491640681955371/1140409602614243328/PhMagnifyingGlassBold.svg");
+    background-repeat: no-repeat;
+    background-position: 0.75vw center;
+    background-size: 1.1vw 1.1vw;
+  
+    &::selection,
+    &:focus {
+        outline: none;
+        border: 0.075vw solid $accent-color;
+        color: white;
+    }
+}
+  
+.field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5vw 1vw 0.5vw 0.75vw;
+    margin: 0.3vw 0.5vw 0vw 0.5vw;
+    border-radius: 0.25vw;
+    color: $font-color;
+  
+    .left-elements {
+        display: flex;
+        align-items: center;
+    
+        .field__title {
+            margin-left: 0.75vw;
+            font-weight: 400;
+            font-size: 0.65vw;
+        }
+    }
+  
+    .right-icon {
+        width: 0.8vw;
+        height: 0.8vw;
+        .right-align {
+            margin-left: auto;
+        }
+    }
+}
+  
+input[type=checkbox]{
+    appearance: none;
+    margin: 0;
+    color: currentColor;
+    width: 0.75vw;
+    height: 0.75vw;
+    min-width: 20px;
+    min-height: 20px;
+    border: 0.1vw solid currentColor;
+    border-radius: 0.15vw;
+    position: relative;
+    display: flex;
+    align-items: center; /* Centrer verticalement */
+    justify-content: center; /* Centrer horizontalement */
+  
+    &::before {
+        content: "";
+        transition: transform 0.3s ease;
+    }
+  
+    &:checked::before {
+        content: "\2713";
+        font-size: 0.65vw;
+        font-size: 18px;
+    }
+}
+  
+input[type=range] {
+    font-size: 0.8vw;
+    width: 5vw;
+    color: $accent-color;
+    --thumb-height: 0.5vw;
+    --track-height: 0.15vw;
+    --track-color: rgba(0, 0, 0, 0.2);
+    --brightness-hover: 180%;
+    --brightness-down: 80%;
+    --clip-edges: 0.15vw;
+    position: relative;
+    background: rgba(255, 0, 0, 0);
+    overflow: hidden;
+    outline: none;
+    
+    &:active {
+        cursor: grabbing;
+        outline: none;
+    }
+    &,
+    &::-webkit-slider-runnable-track,
+    &::-webkit-slider-thumb {
+        outline: none;
+        border-radius: 1vw;
+        -webkit-appearance: none;
+        transition: all ease 100ms;
+        height: var(--thumb-height);
+    }
+    &::-webkit-slider-runnable-track,
+    &::-webkit-slider-thumb {
+        position: relative;
+    }
+    &::-webkit-slider-thumb {
+        --thumb-radius: calc((var(--thumb-height) * 0.5) - 1px);
+        --clip-top: calc((var(--thumb-height) - var(--track-height)) * 0.5 - 0.5px);
+        --clip-bottom: calc(var(--thumb-height) - var(--clip-top));
+        --clip-further: calc(100% + 1px);
+        --box-fill: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0
+            100vmax currentColor;
+    
+        width: var(--thumb-width, var(--thumb-height));
+        background: linear-gradient(white 0 0) scroll no-repeat left center / 50%
+            calc(var(--track-height) + 1px);
+        background-color: white;
+        box-shadow: var(--box-fill);
+        border-radius: var(--thumb-width, var(--thumb-height));
+    
+        filter: brightness(100%);
+        outline: none;
+        clip-path: polygon(
+            100% -1px,
+            var(--clip-edges) -1px,
+            0 var(--clip-top),
+            -100vmax var(--clip-top),
+            -100vmax var(--clip-bottom),
+            0 var(--clip-bottom),
+            var(--clip-edges) 100%,
+            var(--clip-further) var(--clip-further)
+        );
+    }
+    &:hover::-webkit-slider-thumb {
+        cursor: grab;
+        outline: none;
+    }
+  
+    &:active::-webkit-slider-thumb {
+        cursor: grabbing;
+        outline: none;
+    }
+  
+    &::-webkit-slider-runnable-track {
+        background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center / 100% calc(var(--track-height) + 1px);
+        outline: none;
+    }
+    &::-webkit-slider-runnable-track,
+    &::selection,
+    &:focus,
+    &::-moz-range-track {
+        -webkit-appearance: none;
+        box-shadow: none;
+        border: none;
+        background: transparent;
+        outline: none;
+    }
+}
+
+input[type=color] {
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    height: 1.1vw;
+    padding: 0;
+    width: 1.75vw;
+    border-radius: 0.15vw;
+    &:focus {
+        border-radius: 0.15vw;
+        outline: none;
+    }
+    &::-webkit-color-swatch-wrapper {
+        padding: 0;
+    }
+    &::-webkit-color-swatch {
+        border: 0.09vw solid $font-color;
+        border-radius: 0.15vw;
+    }
+}
+  
+/* Suppression des styles par défaut */
+  
+.selector-container {
+    margin-left: auto;
+    display: flex;
+  
+    .field-selector {
+        border: none;
+        background: none;
+        outline: none;
+        box-shadow: none;
+        color: currentColor;
+        width: 6.25vw;
+        font-size: 0.65vw;
+    }
+}
+
+.separator {
+    border-top: 0.1vw solid rgba(61, 62, 72, 1);
+    margin: 0.5vw 0;
+    padding: 0.35vw 0 0 1vw;
+    .separator-title {
+        color: $font-color;
+        font-size: 0.5vw;
+        text-transform: uppercase;
+    }
+}
+  
+.field-image {
+    display: flex;
+    align-items: center;
+    padding: 0.5vw 1vw 0.5vw 0.5vw;
+    margin: 0.3vw 0.5vw 0vw 0.5vw;
+    border-radius: 0.25vw;
+    color: $font-color;
+    font-weight: 400;
+  
+    .image {
+        width: 2.2vw;
+        height: 2.2vw;
+        border-radius: 0.15vw;
+        background: url(https://media.discordapp.net/attachments/1094358339028258937/1140381734576340992/leoihj2ud0841.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .image-field-text {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0.75vw;
+  
+        .image-title {
+            color: currentColor;
+            font-size: 0.65vw;
+        }
+  
+        .image-subtitle {
+            color: $font-color;
+            font-size: 0.55vw;
+        }
+    }
+}
+
+footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.focused {
+    color: white;
+    background-color: rgba(32, 201, 151, 0.3);
+}
+
+.field-icon {
+    width: 1.1vw;
+    height: 1.1vw;
+} 

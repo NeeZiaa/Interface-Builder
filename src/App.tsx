@@ -1,55 +1,48 @@
 import './App.css';
-import Title from './components/display/Title';
-import Selector from './components/formsElements/Selector';
+import Category from './components/containers/Category';
+import Header from './components/containers/Header';
 import Interface from './components/containers/Interface';
-import { useCallback, useEffect } from 'react';
-import { focusOut } from './utils/focus';
+import Field from './components/Field';
+import Checkbox from './components/formsElements/Checkbox';
+import Colorpicker from './components/formsElements/Colorpicker';
+import Range from './components/formsElements/Range';
+import Selector from './components/formsElements/Selector';
+import TextField from './components/formsElements/TextField';
+import './styles/index.scss'; // Importing scss file to use in the project
 
 function App() {
 
-  const onKeyPress = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Enter" ) enterKey();
-      if (e.key === "Escape") escapeKey();
-      if (e.key === "ArrowUp") arrowUpKey();
-    },
-    []
-  );
-
-  useEffect(() => {
-    window.addEventListener("keypress", onKeyPress);
-    return () => window.removeEventListener("keypress", onKeyPress);
-  }, [onKeyPress]);
-  
-  const enterKey = () => {
-    console.log("Enter pressed");
-  }
-
-  const escapeKey = () => {
-    console.log("Escape pressed")
-    focusOut();
-  }
-
-  const arrowUpKey = () => {
-    console.log("ArrowUp pressed");
-  }
-
-
-  const placeholderOptions = [
-      { value: "1", label: "Option 1"},
-      { value: "2", label: "Option 2" },
-      { value: "3", label: "Option 3" },
-      { value: "4", label: "Option 4", selected: true },
-  ];
-
-
-
   return (
-    <Interface label="Interface" width="50%" height="50%">
-      <Title>Selector</Title>
-      <Selector name="selector" options={placeholderOptions} />
-      <Title>Selected : </Title>
-    </Interface>
+      <Interface>
+            <Header/>
+            <Header/>
+            <Header/>
+            <Header/>
+            <Header/>
+            <Header/>
+            <Category label={'Hello'}>
+                <Field icon={'test'} label={'Hello1'}>
+                    <TextField name={'email'} type={'email'}/>
+                </Field>
+                <Field icon={'test'} label={'Hello2'}>
+                    <TextField name={'emailtest'} type={'email'}/>
+                </Field>
+            </Category>
+            <Category label={'Test'}>
+                <Field icon={'test'} label={'Hello3'}>
+                    <Selector name={'test1'} options={[{label: 'test', value: 'test', selected: false}, {label: 'test2', value: 'test2', selected: true}]}/>
+                </Field>
+                <Field icon={'test'} label={'Hello4'}>
+                    <Checkbox name={'test2'} value={'test'}/>
+                </Field>
+                <Field icon={'test'} label={'Hello5'}>
+                    <Colorpicker name={'test3'} defaultColor={'#000000'}/>
+                </Field>
+                <Field icon={'test'} label={'Hello6'}>
+                    <Range name={'test4'} min={0} max={100} step={1} defaultValue={50}/>
+                </Field>
+            </Category>
+      </Interface>
   )
 }
 

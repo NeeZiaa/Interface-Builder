@@ -1,9 +1,6 @@
 interface I_Selector {
     name: string;
     options: I_Options[];
-    disabled?: boolean;
-    onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-    setSelected?: (value: string) => void;
 }
 
 interface I_Options {

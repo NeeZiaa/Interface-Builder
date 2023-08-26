@@ -5,7 +5,7 @@ import { play } from "../../utils/sound";
 const Item: React.FC<T_Item> = ({ title, children, onHover, onClick }) => {
     return (
         <div
-            className="item-container" 
+            className="item" 
             onMouseEnter={(e) => {
                 play("hover");
                 onHover && onHover(e);
