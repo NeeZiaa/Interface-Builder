@@ -6,20 +6,21 @@ import { T_Field } from "../types/components/formElements/FormElementTypes";
 const Field: React.FC<T_Field> = ({ icon, label, children }) => {
 
     const { count, addField } = useContext(FieldsManagerContext);
-    const id = useRef<number>(0);
+
+    const id = useRef(count.current);
 
     useEffect(() => {
         if (React.isValidElement(children)) {
             if(!children.props.name) throw new Error("Field children must have a name");
-            addField(children.props.name);
+            if(!addField(children.props.name)) {
+                return;
+            }
+            console.log(count.current)
+            id.current = count.current;
         } else {
             throw new Error("Field children must be a valid React element");
         }
     }, []);
-
-    useEffect(() => {
-        id.current = count.current;
-    }, [count])
 
     return (
         <div className="field" id={"field-" + id.current.toString()}>
