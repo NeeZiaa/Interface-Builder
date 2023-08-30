@@ -17,6 +17,7 @@ const Field: React.FC<T_Field> = ({ icon, label, children }) => {
             }
             id.current = count.current;
         } else {
+            console.error(children)
             throw new Error("Field children must be a valid React element");
         }
     }, []);

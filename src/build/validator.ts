@@ -50,9 +50,9 @@ export const validateComponent = (type: string, props: Props, children: Props|nu
         throw new Error(`Component ${type} is not a valid component`);
     }
 
-    if (!props) {
-        throw new Error('Component must have props');
-    }
+    // if (!props) {
+    //     throw new Error('Component must have props');
+    // }
 
     validateComponentProps(type, props);
 
@@ -80,13 +80,9 @@ export const validateComponentProps = (type: string, props: Props): boolean => {
 
     const requiredProps = (ComponentsParams as Props)[type as keyof typeof ComponentsParams]["requiredProps"];
 
-    console.log(requiredProps)
-
     const missingProps = Object.keys(requiredProps).filter(
         prop => !(prop in props)
     );
-
-    console.log(missingProps)
   
     if (missingProps.length > 0) {
         console.error(
