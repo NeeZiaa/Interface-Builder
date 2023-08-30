@@ -1,4 +1,4 @@
-import { assembleComponents } from "./assembler";
+import { assembler } from "./assembler";
 import { validateComponent, validateContext } from "./validator";
 
 export const builder = (data: { [key: string]: any }) => {
@@ -11,16 +11,15 @@ export const builder = (data: { [key: string]: any }) => {
 
     for (const c in components) {        
         const nestedComponents = null;  
-        if(components[c].lenght > 1) { 
+        if(components[c].length > 1) { 
             const nestedComponents = components[c];         
             delete nestedComponents.props;
         }
         if(validateComponent(c, components[c].props, nestedComponents)) {
             console.log(`Component ${c} is valid`);
-
         }
     }
 
-    assembleComponents(components);
+    return assembler(components);
 
 }

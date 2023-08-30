@@ -25,7 +25,8 @@ const Interface: React.FC<T_Interface> = ({ label, children, width, height} ) =>
     return (
         <div
             className="interface" 
-            style={{ width, height }} 
+            style={{ width, height }}
+            id="interface" 
         >
             {label && <Title>{label}</Title>}
             

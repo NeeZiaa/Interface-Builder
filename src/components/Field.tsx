@@ -15,7 +15,6 @@ const Field: React.FC<T_Field> = ({ icon, label, children }) => {
             if(!addField(children.props.name)) {
                 return;
             }
-            console.log(count.current)
             id.current = count.current;
         } else {
             throw new Error("Field children must be a valid React element");

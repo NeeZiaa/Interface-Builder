@@ -1,0 +1,34 @@
+{
+    "context": {
+        "theme": "dark",
+        "font": "arial",
+        "style": "normal",
+        "width": "100%",
+        "height": "100%",
+        "position": "top-left"
+    },
+    "components": {
+        "Header": {
+            "props": {
+                "title": "Hello c'est un exemple",
+                "banner": "assets/image.png",
+                "description": "Petit texte de description en bas de header"
+            }
+        },
+        "Field": {
+            "props": {
+                "label": "Field",
+                "icon": "Icon",
+                "style": ["light", "transparent"],
+                "callback": "field_callback"
+            },
+            "Textfield": {
+                "props": {
+                    "name": "Name",
+                    "placeholder": "Placeholder",
+                    "value": "Value"
+                }
+            }
+        }
+    }
+}

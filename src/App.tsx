@@ -8,13 +8,38 @@ import Colorpicker from './components/formsElements/Colorpicker';
 import Range from './components/formsElements/Range';
 import Selector from './components/formsElements/Selector';
 import TextField from './components/formsElements/TextField';
+
+import placeholderData from './build/placeholder.json'
 import './styles/index.scss'; // Importing scss file to use in the project
+import { builder } from './build/builder';
+import { createElement } from 'react';
 
 function App() {
 
-  return (
-      <Interface>
-            <Header/>
+    console.log(placeholderData)
+
+    const components = builder(placeholderData)
+
+    console.log(components)
+
+    const a = createElement(Header)
+
+    // const interfaceContainer = document.getElementById('interface')
+
+    // if (interfaceContainer) {
+    //     ReactDOM.render(
+    //         <React.StrictMode>
+    //             <Interface>
+    //                 {components}
+    //             </Interface>
+    //         </React.StrictMode>,
+    //         interfaceContainer
+    //     );
+    // }
+
+    return (
+        <Interface>      
+            {/* <Header/>
             <Header/>
             <Header/>
             <Header/>
@@ -41,9 +66,11 @@ function App() {
                 <Field icon={'test'} label={'Hello6'}>
                     <Range name={'test4'} min={0} max={100} step={1} defaultValue={50}/>
                 </Field>
-            </Category>
-      </Interface>
-  )
+            </Category> */}
+            {components}
+            {/* {a} */}
+        </Interface>
+    )
 }
 
 export default App;

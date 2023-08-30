@@ -1,4 +1,4 @@
-import { Components } from "../types/components/ComponentsTypes";
+import { ComponentsParams } from "../types/components/ComponentsTypes";
 
 interface Props {
     [key: string]: any;
@@ -40,11 +40,13 @@ export const validateContext = (context: Props): boolean => {
 
 export const validateComponent = (type: string, props: Props, children: Props|null): boolean =>  {
 
+    type = type.charAt(0).toUpperCase() + type.slice(1);
+
     if (!type) {
         throw new Error('Component must have a type');
     }    
 
-    if (!Components[type as keyof typeof Components]) {
+    if (!ComponentsParams[type]) {
         throw new Error(`Component ${type} is not a valid component`);
     }
 
@@ -76,11 +78,15 @@ export const validateComponent = (type: string, props: Props, children: Props|nu
 
 export const validateComponentProps = (type: string, props: Props): boolean => {
 
-    const requiredProps = (Components as Props)[type as keyof typeof Components]["requiredProps"];
+    const requiredProps = (ComponentsParams as Props)[type as keyof typeof ComponentsParams]["requiredProps"];
+
+    console.log(requiredProps)
 
     const missingProps = Object.keys(requiredProps).filter(
         prop => !(prop in props)
     );
+
+    console.log(missingProps)
   
     if (missingProps.length > 0) {
         console.error(
