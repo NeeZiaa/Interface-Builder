@@ -1,4 +1,5 @@
 {
+    "action": "openWebView",
     "context": {
         "theme": "dark",
         "font": "arial",
@@ -14,27 +15,7 @@
                 "title": "Hello c'est un exemple",
                 "banner": "assets/image.png",
                 "description": "Petit texte de description en bas de header"
-            },
-            "children": [
-                {
-                    "type": "Button",
-                    "props": {
-                        "label": "Button",
-                        "icon": "Icon",
-                        "style": ["light", "transparent"],
-                        "callback": "button_callback"
-                    }
-                },
-                {
-                    "type": "Button",
-                    "props": {
-                        "label": "Button 2",
-                        "icon": "Icon",
-                        "style": ["light", "transparent"],
-                        "callback": "button_callback"
-                    }
-                }
-            ]
+            }
         },
         {
             "type": "Field",
@@ -44,14 +25,17 @@
                 "style": ["light", "transparent"],
                 "callback": "field_callback"
             },
-            "TextField": {
-                "props": {
-                    "type": "text",
-                    "name": "Name",
-                    "placeholder": "Placeholder",
-                    "value": "Value"
-                }
-            }
+            "children": [
+                {
+                    "type": "TextField",
+                    "props": {
+                        "type": "text",
+                        "name": "Name",
+                        "placeholder": "Placeholder",
+                        "value": "Value"
+                    }
+                }                   
+            ]
         },
         {
             "type": "Field",
@@ -61,14 +45,17 @@
                 "style": ["light", "transparent"],
                 "callback": "field_callback"
             },
-            "TextField": {
-                "props": {
-                    "type": "text",
-                    "name": "Test",
-                    "placeholder": "Placeholder",
-                    "value": "Value"
+            "children": [
+                {
+                    "type": "TextField",
+                    "props": {
+                        "type": "text",
+                        "name": "Test",
+                        "placeholder": "Placeholder",
+                        "value": "Value"
+                    }
                 }
-            }
+            ]
         }
     ] 
 }

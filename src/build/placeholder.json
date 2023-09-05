@@ -15,27 +15,7 @@
                 "title": "Hello c'est un exemple",
                 "banner": "assets/image.png",
                 "description": "Petit texte de description en bas de header"
-            },
-            "children": [
-                {
-                    "type": "Button",
-                    "props": {
-                        "label": "Button",
-                        "icon": "Icon",
-                        "style": ["light", "transparent"],
-                        "callback": "button_callback"
-                    }
-                },
-                {
-                    "type": "Button",
-                    "props": {
-                        "label": "Button 2",
-                        "icon": "Icon",
-                        "style": ["light", "transparent"],
-                        "callback": "button_callback"
-                    }
-                }
-            ]
+            }
         },
         {
             "type": "Field",
