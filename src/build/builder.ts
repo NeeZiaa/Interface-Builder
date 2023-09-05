@@ -15,8 +15,9 @@ export const builder = (data: { [key: string]: any }) => {
             const nestedComponents = components[c];         
             delete nestedComponents.props;
         }
-        if(validateComponent(c, components[c].props, nestedComponents)) {
-            console.log(`Component ${c} is valid`);
+        const type = components[c].type;
+        if(validateComponent(type, components[c].props, nestedComponents)) {
+            console.log(`Component ${type} is valid`);
         }
     }
 

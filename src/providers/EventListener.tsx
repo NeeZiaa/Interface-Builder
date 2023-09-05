@@ -4,7 +4,7 @@ type EventCallback = (e: Event) => void;
 
 type EventData = {
   event: string;
-  element: HTMLElement;
+  element: HTMLElement | Window;
   callback: EventCallback;
 };
 
