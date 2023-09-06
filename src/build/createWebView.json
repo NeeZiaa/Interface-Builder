@@ -1,5 +1,6 @@
 {
-    "action": "openWebView",
+    "action": "createWebView",
+    "name": "testInterface",
     "context": {
         "theme": "dark",
         "font": "arial",
