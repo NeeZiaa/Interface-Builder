@@ -3,7 +3,7 @@ import Interface from './components/containers/Interface';
 
 import placeholderData from './build/placeholder.json' // Importing placeholder data
 import './styles/index.scss'; // Importing scss file to use in the project
-import { builder } from './build/builder';
+import { build } from './build/builder';
 import { useContext, useEffect, useState } from 'react';
 import { EventContext } from './providers/EventListener';
 
@@ -24,8 +24,7 @@ function App() {
         setData((e as MessageEvent).data);
     }
 
-
-    useEffect(() => {    
+    useEffect(() => {
         postMessage(placeholderData)
         subscribeEventListener({ event: 'message', element: window, callback: onMessage });
         return () => {
@@ -39,7 +38,7 @@ function App() {
         }
         return (
             <Interface>      
-                {builder(data)}
+                {build(data)}
             </Interface>
         )
     } else {

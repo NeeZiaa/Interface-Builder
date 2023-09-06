@@ -1,18 +1,22 @@
-import { assembler } from "./assembler";
+import { assembleComponents } from "./assembler";
 import { validateComponent, validateContext } from "./validator";
 
-export const builder = (data: { [key: string]: any }) => {
+export const build = (data: { [key: string]: any }) => {
 
     const { context, components } = data;
+
+    if(Object.keys(data).length === 0) {
+        throw new Error('Components are required');
+    }
 
     if(validateContext(context)) {
         console.log('Context is valid');
     }
 
     for (const c in components) {        
-        const nestedComponents = null;  
+        let nestedComponents = null;  
         if(components[c].length > 1) { 
-            const nestedComponents = components[c];         
+            nestedComponents = components[c];         
             delete nestedComponents.props;
         }
         const type = components[c].type;
@@ -21,6 +25,6 @@ export const builder = (data: { [key: string]: any }) => {
         }
     }
 
-    return assembler(components);
+    return assembleComponents(components);
 
 }

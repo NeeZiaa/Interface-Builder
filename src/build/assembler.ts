@@ -5,13 +5,13 @@ interface Props {
     [key: string]: any;
 }
 
-export const assembler = (components: Props) => {
+export const assembleComponents = (components: Props) => {
     console.log('Assembling components...');
     const buildedComponents = [];
     for(const c in components) {
         let children = null;
         if(components[c].children) {
-            children = (assembler(components[c].children));
+            children = (assembleComponents(components[c].children));
         }
         if(children !== null) {
             components[c].props.children = children;
@@ -26,5 +26,6 @@ export const assembler = (components: Props) => {
     if(buildedComponents.length === 1 && buildedComponents[0] !== undefined) {
         return buildedComponents[0];
     }
+    console.info('Components assembled');
     return buildedComponents;
 }
