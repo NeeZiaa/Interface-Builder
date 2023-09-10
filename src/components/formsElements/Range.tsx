@@ -1,12 +1,5 @@
 import React from 'react';
-
-export interface RangeProps {
-    name: string;
-    min: number;
-    max: number;
-    step: number;
-    defaultValue: number;
-}
+import { RangeProps } from '../../types/components/formElements/RangeTypes';
 
 const Range: React.FC<RangeProps> = ({ name, min, max, step, defaultValue }) => {
     return (

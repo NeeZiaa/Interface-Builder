@@ -1,9 +1,5 @@
+import { CallbackProps } from "../types/utilsTypes";
 import { postFetch } from "./postFetch"
-
-interface CallbackProps {
-    type: string;
-    data?: unknown;
-}
 
 const sendCallback = ({type, data}: CallbackProps) => {
     postFetch({
