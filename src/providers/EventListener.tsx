@@ -1,24 +1,6 @@
-import React, { createContext, ReactNode, useEffect, useState, Context } from "react";
+import { createContext, ReactNode, useEffect, useState, Context } from "react";
+import { EventContextType, EventData, NullableEventContextType } from "../types/providers/EventListenerTypes";
 
-type EventCallback = (e: Event) => void;
-
-type EventData = {
-  event: string;
-  element: HTMLElement | Window;
-  callback: EventCallback;
-};
-
-type subscribeEventListener = (data: EventData) => void;
-
-type EventContextType = {
-    subscribeEventListener: subscribeEventListener
-    unsubscribeEventListener: subscribeEventListener
-};
-
-type NullableEventContextType = {
-    subscribeEventListener: subscribeEventListener | null;
-    unsubscribeEventListener: subscribeEventListener | null;
-};
 
 const EventContext = createContext<NullableEventContextType>({ subscribeEventListener: null, unsubscribeEventListener: null }) as Context<EventContextType>;
 

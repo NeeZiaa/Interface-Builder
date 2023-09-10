@@ -13,7 +13,7 @@ const Item: React.FC<T_Item> = ({ title, children, onHover, onClick }) => {
             onClick={(e) => {
                 play("click");
                 onClick && onClick(e);
-                sendCallback({name: "click", data: { event: JSON.stringify(e) }});
+                sendCallback({type: "click", data: { event: JSON.stringify(e) }});
             }}
         >
             {title && <h2>{title}</h2>}

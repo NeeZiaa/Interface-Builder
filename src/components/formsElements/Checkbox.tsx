@@ -3,7 +3,7 @@ import { T_Checkbox } from "../../types/components/formElements/CheckBoxTypes";
 import { KeyboardEventListener } from "../../providers/KeyboardListener";
 
 const Checkbox: React.FC<T_Checkbox> = ({
-    name, onCheck, checked=false
+    name, checked=false
 }) => {
 
     const {subscribeKeyboardEvent, unsubscribeKeyboardEvent} = useContext(KeyboardEventListener);
@@ -26,6 +26,7 @@ const Checkbox: React.FC<T_Checkbox> = ({
             type="checkbox" 
             name={name} 
             ref={checkboxRef}
+            defaultChecked={checked}
         />
     );
 }

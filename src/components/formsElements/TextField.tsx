@@ -1,6 +1,4 @@
 import { T_TextField } from "../../types/components/formElements/TextFieldTypes";
-import { checkRegexEmail } from "../../utils/regex";
-import { play } from "../../utils/sound";
 
 const AuthorizedTypes = ['text', 'email', 'number', 'tel', 'url'];
 
