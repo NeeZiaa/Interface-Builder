@@ -1,7 +1,6 @@
 import './App.css';
 import Interface from './components/containers/Interface';
 
-import placeholderData from './build/placeholder.json' // Importing placeholder data
 import './styles/index.scss'; // Importing scss file to use in the project
 import { build } from './build/builder';
 import { useContext, useEffect, useState } from 'react';
@@ -25,7 +24,6 @@ function App() {
     }
 
     useEffect(() => {
-        postMessage(placeholderData)
         subscribeEventListener({ event: 'message', element: window, callback: onMessage });
         return () => {
             unsubscribeEventListener({ event: 'message', element: window, callback: onMessage });

@@ -1,4 +1,3 @@
-import { useCallback, useContext, useEffect } from "react";
 import { T_Title } from "../../types/components/display/Title";
 
 const Title: React.FC<T_Title> = ({children, size, color, font}) => {

@@ -1,8 +1,7 @@
 interface I_Category {
     label: string;
     children: React.ReactNode;
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    onHover?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    onHover?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 type T_Category = I_Category;

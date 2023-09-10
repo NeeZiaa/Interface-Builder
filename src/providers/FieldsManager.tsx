@@ -1,7 +1,8 @@
-import React, { createContext, useEffect, Context, useContext, useCallback, useRef, useState, Children, isValidElement } from 'react';
+import React, { createContext, useEffect, Context, useContext, useCallback, useRef, useState, isValidElement } from 'react';
 import { KeyboardEventListener } from './KeyboardListener';
 import { EventContext } from './EventListener';
 import { filterRecursive } from '../utils/countChildren';
+import { EventCallback } from '../types/providers/EventListenerTypes';
 
 type T_AddField = (field: string) => boolean
 type T_DeleteField = (field: string) => void
@@ -89,10 +90,9 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
     const onKeyEnter = useCallback(() => {
         console.log('enter');
     }, []);
-
-    const onClick = useCallback((e) => {
-        const parent = e.target?.parentElement.parentElement.id;
-        setFocusedItem(parseInt(parent.substring(6)));
+    const onClick = useCallback((e: React.MouseEvent) => {
+        const parent = (e.target as HTMLElement)?.parentElement?.parentElement?.id;
+        setFocusedItem(parseInt(parent?.substring(6) ?? '0'));
         console.log('click');
     }, []);
 
@@ -100,10 +100,12 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
         console.log('focus');
     }, []);
 
-    const onChange = useCallback((e) => {
-        let data = e.target.value;
+    const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        let data: string | boolean = e.target.value;
         if (e.target.type === 'checkbox') {
-            data = e.target.checked;
+            if(e.target instanceof HTMLInputElement) {
+                data = e.target.checked;
+            }
         }
         console.log('change', data);
     }, []);
@@ -116,9 +118,9 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
             const input = document.getElementsByName(field)[0] as HTMLInputElement;
             if (!input) console.error(`Field ${field} not found`);      
             
-            subscribeEventListener({ event: 'click', element: input, callback: onClick });
+            subscribeEventListener({ event: 'click', element: input, callback: onClick as unknown as EventCallback });
             subscribeEventListener({ event: 'focus', element: input, callback: onFocus });
-            subscribeEventListener({ event: 'input', element: input, callback: onChange });
+            subscribeEventListener({ event: 'input', element: input, callback: onChange as unknown as EventCallback  });
         }
 
         return () => {
@@ -128,9 +130,9 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
             for (const field of fields.current) {
                 const input = document.getElementsByName(field)[0] as HTMLInputElement;
                 if (!input) console.error(`Field ${field} not found`);
-                unsubscribeEventListener({ event: 'click', element: input, callback: onClick });
+                unsubscribeEventListener({ event: 'click', element: input, callback: onClick as unknown as EventCallback  });
                 unsubscribeEventListener({ event: 'focus', element: input, callback: onFocus });
-                unsubscribeEventListener({ event: 'input', element: input, callback: onChange });
+                unsubscribeEventListener({ event: 'input', element: input, callback: onChange as unknown as EventCallback  });
             }
         };
     }, [fields]);
