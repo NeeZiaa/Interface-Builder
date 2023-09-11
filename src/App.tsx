@@ -1,58 +1,141 @@
-// import './App.css';
-// import Interface from './components/containers/Interface';
-// import placeholderData from './build/createWebView.json' // Importing placeholder data
-// import './styles/index.scss'; // Importing scss file to use in the project
-// import { build } from './build/builder';
-// import { useContext, useEffect, useState } from 'react';
-// import { EventContext } from './providers/EventListener';
-
+import './styles/index.scss';
 import { useContext, useEffect, useState } from "react";
 import { EventContext } from "./providers/EventListener";
 import { build } from "./build/builder";
-import Interface from "./components/containers/Interface";
 
-// function App() {
+const addWebView = () => {
+    postMessage({ 
+        action: 'createWebView', 
+        name: 'test', 
+        context: {
+            theme: "dark",
+            font: "arial",
+            style: "normal",
+            width: "100%",
+            height: "100%",
+            position: "top-left"
+        },
+        components: [
+            {
+                type: "Header",
+                props: {
+                    title: "Hello c'est un exemple",
+                    banner: "assets/image.png",
+                    description: "Petit texte de description en bas de header"
+                }
+            },
+            {
+                type: "Field",
+                props: {
+                    label: "Field",
+                    icon: "Icon",
+                    style: ["light", "transparent"],
+                    callback: "field_callback"
+                },
+                children: [
+                    {
+                        type: "TextField",
+                        props: {
+                            type: "text",
+                            name: "Name",
+                            placeholder: "Placeholder",
+                            value: "Value"
+                        }
+                    }                   
+                ]
+            },
+            {
+                type: "Field",
+                props: {
+                    label: "Field 2",
+                    icon: "Icon",
+                    style: ["light", "transparent"],
+                    callback: "field_callback"
+                },
+                children: [
+                    {
+                        type: "TextField",
+                        props: {
+                            type: "text",
+                            name: "Test",
+                            placeholder: "Placeholder",
+                            value: "Value"
+                        }
+                    }
+                ]
+            }
+        ]
+    })
+}
 
-//     type Data = Partial<{
-//         action: string,
-//         context: object,
-//         components: object,
-//     }>
-    
-//     const { subscribeEventListener, unsubscribeEventListener } = useContext(EventContext);
-    
-//     const [ data, setData ] = useState<Data>({});
+const updateWebView = () => {
+    postMessage({ 
+        action: 'updateWebView', 
+        name: 'test', 
+        context: {
+            theme: "dark",
+            font: "arial",
+            style: "normal",
+            width: "100%",
+            height: "100%",
+            position: "top-left"
+        },
+        components: [
+            {
+                type: "Header",
+                props: {
+                    title: "Hello c'est un exemple",
+                    banner: "assets/image.png",
+                    description: "Petit texte de description en bas de header"
+                }
+            },
+            {
+                type: "Field",
+                props: {
+                    label: "PasswordField Test",
+                    icon: "Icon",
+                    style: ["light", "transparent"],
+                    callback: "field_callback"
+                },
+                children: [
+                    {
+                        type: "PasswordField",
+                        props: {
+                            type: "text",
+                            name: "Name",
+                            placeholder: "Placeholder",
+                            value: "Value"
+                        }
+                    }                   
+                ]
+            },
+            {
+                type: "Field",
+                props: {
+                    label: "Field 2",
+                    icon: "Icon",
+                    style: ["light", "transparent"],
+                    callback: "field_callback"
+                },
+                children: [
+                    {
+                        type: "TextField",
+                        props: {
+                            type: "text",
+                            name: "Test",
+                            placeholder: "Placeholder",
+                            value: "Value"
+                        }
+                    }
+                ]
+            }
+        ]
+    })
+}
 
-//     const onMessage = (e: Event) => {
-//         console.log(e)
-//         setData((e as MessageEvent).data);
-//     }
-
-//     useEffect(() => {
-//         subscribeEventListener({ event: 'message', element: window, callback: onMessage });
-//         return () => {
-//             unsubscribeEventListener({ event: 'message', element: window, callback: onMessage });
-//         }
-//     }, [])
-
-//     if(Object.keys(data).length !== 0) {
-//         if(data.action !== 'openWebView') {
-//             return <></>;
-//         }
-//         return (
-//             <Interface>      
-//                 {build(data)}
-//             </Interface>
-//         )
-//     } else {
-//         return <></>;
-//     }
-
-    
-
-// }
-
-// export default App;
+const removeWebView = () => {
+    postMessage({ action: 'closeWebView', name: 'test' })
+}
 
 const App = () => {
 
@@ -69,41 +152,42 @@ const App = () => {
     const { subscribeEventListener, unsubscribeEventListener } = useContext(EventContext);
 
 
-    const appData: AppData = [];
+    const [ appData, setAppData ] = useState<AppData>([]);
 
     const onMessage = (e: Event) => {
         console.log(e)
 
         switch((e as MessageEvent).data.action) {
             case 'createWebView':
-                if(appData.find((data) => data.name === (e as MessageEvent).data.name)) {
-                    console.error('WebView with the same name already exists, ignoring the request')
-                } else {
-                    appData.push((e as MessageEvent).data);
-                }
+                setAppData([...appData, (e as MessageEvent).data])
+                //TODO: console.error('WebView with the same name already exists, ignoring the request')
                 break;
             case 'closeWebView':
-                if(appData.find((data) => data.name === (e as MessageEvent).data.name)) {
-                    appData.splice(appData.findIndex((data) => data.name === (e as MessageEvent).data.name), 1);
-                } else {
-                    console.error('WebView with this name does not exists, ignoring the request')
-                }
+                setAppData((appD) => {
+                    return appD.filter((data) => data.name !== (e as MessageEvent).data.name)
+                })
+                // TODO: console.error('WebView with this name does not exists, ignoring the request')
                 break;
             case 'updateWebView':
-                if(appData.find((data) => data.name === (e as MessageEvent).data.name)) {
-                    appData.splice(appData.findIndex((data) => data.name === (e as MessageEvent).data.name), 1, (e as MessageEvent).data);
-                } else {
-                    console.error('WebView with this name does not exists, ignoring the request')
-                }
+                setAppData((appD) => {
+                    return appD.map((data) => {
+                        if(data.name === (e as MessageEvent).data.name) {
+                            return (e as MessageEvent).data;
+                        }
+                        console.error('WebView with this name does not exists, ignoring the request')
+                        return data;
+                    })
+                })
                 break;
             case 'openWebView':
                 if(appData.find((data) => data.name === (e as MessageEvent).data.name)) {
                     console.error('WebView with the same name already exists, ignoring the request')
                 } else {
-                    appData.push((e as MessageEvent).data);
+                    setAppData([...appData, (e as MessageEvent).data])
                 }
                 break;
             default:
+                console.error('Invalid action, ignoring the request')
                 break;
         }
     }
@@ -118,15 +202,23 @@ const App = () => {
     if(appData.length !== 0) {
         return (
             <>
-                {appData.map((data, index) => {
+                {appData.map((data) => {
                     return (
                         build(data)
                     )
                 })}
+                <button onClick={removeWebView}>
+                    Click to add remove webview
+                </button>                
+                <button onClick={updateWebView}>
+                    Click to add update webview
+                </button>
             </>
         )
     } else {
-        return <></>;
+        return <>                <button onClick={addWebView}>
+        Click to add new webview
+    </button></>;
     }
 
 }
