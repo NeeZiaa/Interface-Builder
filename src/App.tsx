@@ -216,9 +216,12 @@ const App = () => {
             </>
         )
     } else {
-        return <>                <button onClick={addWebView}>
-        Click to add new webview
-    </button></>;
+        return (
+        <>                
+            <button onClick={addWebView}>
+                Click to add new webview
+            </button>
+        </>);
     }
 
 }
