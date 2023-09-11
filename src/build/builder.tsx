@@ -1,3 +1,4 @@
+import Interface from "../components/containers/Interface";
 import { assembleComponents } from "./assembler";
 import { validateComponent, validateContext } from "./validator";
 
@@ -25,6 +26,10 @@ export const build = (data: { [key: string]: any }) => {
         }
     }
 
-    return assembleComponents(components);
+    return (
+        <Interface>
+            {assembleComponents(components)}
+        </Interface>
+    );
 
 }
