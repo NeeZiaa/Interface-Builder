@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Création du contexte de l'interface
+# Création du contexte
 
 ```json title="request.json"
 { 

@@ -1,4 +1,6 @@
-
+*:focus {
+    outline: none;
+}
 
 .interface {
     background-color: $background-color;
