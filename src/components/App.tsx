@@ -1,7 +1,7 @@
-import './styles/index.scss';
+import '../styles/index.scss';
 import { useContext, useEffect, useState } from "react";
-import { EventContext } from "./providers/EventListener";
-import { build } from "./build/builder";
+import { EventContext } from "../providers/EventListener";
+import { build } from "../build/builder";
 
 const addWebView = () => {
     postMessage({ 
