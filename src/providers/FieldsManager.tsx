@@ -76,6 +76,7 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
     const onKeyEnter = useCallback(() => {
         console.log('enter');
     }, []);
+    
     const onClick = useCallback((e: React.MouseEvent) => {
         const parent = (e.target as HTMLElement)?.parentElement?.parentElement?.id;
         setFocusedItem(parseInt(parent?.substring(6) ?? '0'));

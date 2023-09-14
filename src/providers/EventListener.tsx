@@ -28,7 +28,6 @@ const EventListener = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    // console.log('Add listeners', eventListeners)
     for (const eventData of eventListeners) {
       eventData.element.addEventListener(eventData.event, eventData.callback);
     }

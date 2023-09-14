@@ -155,8 +155,6 @@ const App = () => {
     const [ appData, setAppData ] = useState<AppData>([]);
 
     const onMessage = (e: Event) => {
-        console.log(e)
-
         switch((e as MessageEvent).data.action) {
             case 'createWebView':
                 setAppData([...appData, (e as MessageEvent).data])

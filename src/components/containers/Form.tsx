@@ -2,12 +2,6 @@ import { T_Form } from "../../types/components/containers/FormTypes";
 
 const Form: React.FC<T_Form> = ({ title, onSubmit, onReset, children }) => {
 
-    // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    //     console.log("handleSubmit", e)
-    //     e.preventDefault();
-    //     onSubmit && onSubmit(e);
-    // }
-
     return (
         <div className="form-container">
             {title && <h2>{title}</h2>}
