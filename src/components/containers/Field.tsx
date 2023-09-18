@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { Icon } from '@iconify-icon/react';
-import { FieldsManagerContext } from "../providers/FieldsManager";
-import { T_Field } from "../types/components/formElements/FormElementTypes";
+import { FieldsManagerContext } from "../../providers/FieldsManager";
+import { T_Field } from "../../types/components/formElements/FormElementTypes";
 
 const Field: React.FC<T_Field> = ({ icon, label, children }) => {
 

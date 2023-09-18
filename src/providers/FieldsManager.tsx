@@ -3,21 +3,7 @@ import { KeyboardEventListener } from './KeyboardListener';
 import { EventContext } from './EventListener';
 import { filterRecursive } from '../utils/countChildren';
 import { EventCallback } from '../types/providers/EventListenerTypes';
-
-type T_AddField = (field: string) => boolean
-type T_DeleteField = (field: string) => void
-
-type T_FieldsManagerContext = {
-    count: React.MutableRefObject<number>,
-    addField: T_AddField,
-    deleteField: T_DeleteField
-}
-
-type T_NullableFieldsManagerContext = {
-    count: React.MutableRefObject<number> | null,
-    addField: T_AddField | null,
-    deleteField: T_DeleteField | null
-}
+import { T_AddField, T_DeleteField, T_FieldsManagerContext, T_NullableFieldsManagerContext } from '../types/providers/FieldsManagerTypes';
 
 const FieldsManagerContext = createContext<T_NullableFieldsManagerContext>({ count: null, addField: null, deleteField: null }) as Context<T_FieldsManagerContext>;
 
@@ -90,6 +76,7 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
     const onKeyEnter = useCallback(() => {
         console.log('enter');
     }, []);
+    
     const onClick = useCallback((e: React.MouseEvent) => {
         const parent = (e.target as HTMLElement)?.parentElement?.parentElement?.id;
         setFocusedItem(parseInt(parent?.substring(6) ?? '0'));

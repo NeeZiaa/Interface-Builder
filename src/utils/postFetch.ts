@@ -1,10 +1,4 @@
-interface PostFetchProps {
-    url: string;
-    body: object;
-    headers?: object;
-    onSuccess?: (data: string) => void;
-    onError?: (error: unknown) => void;
-}
+import { PostFetchProps } from "../types/utilsTypes";
 
 export const postFetch = async ({ url, body, headers, onSuccess, onError }: PostFetchProps) => {
     try {

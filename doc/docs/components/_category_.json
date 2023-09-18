@@ -1,7 +1,7 @@
 {
     "label": "Composants",
-    "position": 1,
+    "position": 3,
     "link": {
-      "description": "Documentation des composants de l'application"
+        "description": "Documentation des composants de l'application"
     }
-  }
+}

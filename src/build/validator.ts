@@ -85,9 +85,11 @@ export const validateComponentProps = (type: string, props: Props): boolean => {
     );
   
     if (missingProps.length > 0) {
+
         console.error(
             `Les propriétés suivantes sont manquantes pour le composant ${type}: ${missingProps.join(", ")}`
         );
+
         return false;
     }
 
