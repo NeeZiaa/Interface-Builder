@@ -34,6 +34,10 @@ export const validateContext = (context: Props): boolean => {
         throw new Error('Context style must be normal or italic');
     } 
 
+    if (!context.position) {
+        throw new Error('Context must have a position');
+    } 
+
     return true;
 
 }

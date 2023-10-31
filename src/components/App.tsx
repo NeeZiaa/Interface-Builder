@@ -2,140 +2,8 @@ import '../styles/index.scss';
 import { useContext, useEffect, useState } from "react";
 import { EventContext } from "../providers/EventListener";
 import { build } from "../build/builder";
-
-const addWebView = () => {
-    postMessage({ 
-        action: 'createWebView', 
-        name: 'test', 
-        context: {
-            theme: "dark",
-            font: "arial",
-            style: "normal",
-            width: "100%",
-            height: "100%",
-            position: "top-left"
-        },
-        components: [
-            {
-                type: "Header",
-                props: {
-                    title: "Hello c'est un exemple",
-                    banner: "assets/image.png",
-                    description: "Petit texte de description en bas de header"
-                }
-            },
-            {
-                type: "Field",
-                props: {
-                    label: "Field",
-                    icon: "Icon",
-                    style: ["light", "transparent"],
-                    callback: "field_callback"
-                },
-                children: [
-                    {
-                        type: "TextField",
-                        props: {
-                            type: "text",
-                            name: "Name",
-                            placeholder: "Placeholder",
-                            value: "Value"
-                        }
-                    }                   
-                ]
-            },
-            {
-                type: "Field",
-                props: {
-                    label: "Field 2",
-                    icon: "Icon",
-                    style: ["light", "transparent"],
-                    callback: "field_callback"
-                },
-                children: [
-                    {
-                        type: "TextField",
-                        props: {
-                            type: "text",
-                            name: "Test",
-                            placeholder: "Placeholder",
-                            value: "Value"
-                        }
-                    }
-                ]
-            }
-        ]
-    })
-}
-
-const updateWebView = () => {
-    postMessage({ 
-        action: 'updateWebView', 
-        name: 'test', 
-        context: {
-            theme: "dark",
-            font: "arial",
-            style: "normal",
-            width: "100%",
-            height: "100%",
-            position: "top-left"
-        },
-        components: [
-            {
-                type: "Header",
-                props: {
-                    title: "Hello c'est un exemple",
-                    banner: "assets/image.png",
-                    description: "Petit texte de description en bas de header"
-                }
-            },
-            {
-                type: "Field",
-                props: {
-                    label: "PasswordField Test",
-                    icon: "Icon",
-                    style: ["light", "transparent"],
-                    callback: "field_callback"
-                },
-                children: [
-                    {
-                        type: "PasswordField",
-                        props: {
-                            type: "text",
-                            name: "Name",
-                            placeholder: "Placeholder",
-                            value: "Value"
-                        }
-                    }                   
-                ]
-            },
-            {
-                type: "Field",
-                props: {
-                    label: "Field 2",
-                    icon: "Icon",
-                    style: ["light", "transparent"],
-                    callback: "field_callback"
-                },
-                children: [
-                    {
-                        type: "TextField",
-                        props: {
-                            type: "text",
-                            name: "Test",
-                            placeholder: "Placeholder",
-                            value: "Value"
-                        }
-                    }
-                ]
-            }
-        ]
-    })
-}
-
-const removeWebView = () => {
-    postMessage({ action: 'closeWebView', name: 'test' })
-}
+import { addWebView, addAnotherWebView, removeWebView, updateWebView } from '../devkit/devFunctions';
+import { InterfaceManager } from '../providers/InterfaceManager';
 
 const App = () => {
 
@@ -157,7 +25,12 @@ const App = () => {
     const onMessage = (e: Event) => {
         switch((e as MessageEvent).data.action) {
             case 'createWebView':
-                setAppData([...appData, (e as MessageEvent).data])
+                // setAppData([...appData, (e as MessageEvent).data])
+                setAppData((appD) => {
+                    console.log(appD)
+                    return [...appD, (e as MessageEvent).data]
+                    // return [...appD, (e as MessageEvent).data]
+                })
                 //TODO: console.error('WebView with the same name already exists, ignoring the request')
                 break;
             case 'closeWebView':
@@ -200,16 +73,17 @@ const App = () => {
     if(appData.length !== 0) {
         return (
             <>
-                {appData.map((data) => {
-                    return (
-                        build(data)
-                    )
-                })}
+                <InterfaceManager>
+                    {appData.map((data) => { return ( build(data) )} )}                
+                </InterfaceManager>
+                <button onClick={addAnotherWebView}>
+                    Click to add new webview
+                </button>
                 <button onClick={removeWebView}>
-                    Click to add remove webview
+                    Click to remove webview
                 </button>                
                 <button onClick={updateWebView}>
-                    Click to add update webview
+                    Click to update webview
                 </button>
             </>
         )

@@ -4,12 +4,13 @@ import { EventContext } from './EventListener';
 import { filterRecursive } from '../utils/countChildren';
 import { EventCallback } from '../types/providers/EventListenerTypes';
 import { T_AddField, T_DeleteField, T_FieldsManagerContext, T_NullableFieldsManagerContext } from '../types/providers/FieldsManagerTypes';
+import sendCallback from '../utils/sendCallback';
 
 const FieldsManagerContext = createContext<T_NullableFieldsManagerContext>({ count: null, addField: null, deleteField: null }) as Context<T_FieldsManagerContext>;
 
 const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
 
-    const {subscribeKeyboardEvent, unsubscribeKeyboardEvent} = useContext(KeyboardEventListener);
+    const { subscribeKeyboardEvent, unsubscribeKeyboardEvent } = useContext(KeyboardEventListener);
 
     const { subscribeEventListener, unsubscribeEventListener } = useContext(EventContext);
 
@@ -54,7 +55,7 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
             unsubscribeKeyboardEvent('ArrowUp', onKeyArrowUp);
             unsubscribeKeyboardEvent('ArrowDown', onKeyArrowDown);
         }
-    }, [onKeyArrowUp, onKeyArrowDown, subscribeKeyboardEvent, unsubscribeKeyboardEvent]);
+    }, []);
 
     const count = useRef(0);
 
@@ -73,18 +74,39 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
         fields.current = fields.current.filter((e) => e !== field);
     };
 
-    const onKeyEnter = useCallback(() => {
-        console.log('enter');
+    const getFieldValue = (name: string) => {
+        const input = document.getElementsByName(name)[0] as HTMLInputElement | HTMLTextAreaElement;
+        if (!input) console.error(`Field ${name} not found`);
+        let value: string | boolean = input.value;
+        if (input.type === 'checkbox') {
+            if(input instanceof HTMLInputElement) {
+                value = input.checked;
+            }
+        }
+        return value;
+    }
+
+    const onKeyEnter = useCallback((e: KeyboardEvent) => {
+        const element = e.target as HTMLInputElement | HTMLTextAreaElement;
+        let data: string | boolean  = element.value;
+        if (element.type === 'checkbox') {
+            if(element instanceof HTMLInputElement) {
+                data = element.checked;
+            }
+        }
+        console.log('submit', element.name, data)
+        sendCallback({type: "submit", name: element.name, data});
     }, []);
-    
+
     const onClick = useCallback((e: React.MouseEvent) => {
         const parent = (e.target as HTMLElement)?.parentElement?.parentElement?.id;
+        console.log(parent)
         setFocusedItem(parseInt(parent?.substring(6) ?? '0'));
         console.log('click');
     }, []);
 
     const onFocus = useCallback(() => {
-        console.log('focus');
+        console.log('focus'); 
     }, []);
 
     const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -94,12 +116,16 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
                 data = e.target.checked;
             }
         }
-        console.log('change', data);
+        const name = e.target.name;
+        console.log('change', name, data)
+        sendCallback({type: "change", name, data});
     }, []);
 
     useEffect(() => {
 
         subscribeKeyboardEvent('Enter', onKeyEnter);
+
+        console.log('Fields : ', fields.current)
 
         for (const field of fields.current) {
             const input = document.getElementsByName(field)[0] as HTMLInputElement;

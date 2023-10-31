@@ -12,6 +12,7 @@ import Item from "../../components/containers/Item";
 import Field from "../../components/containers/Field";
 import Title from "../../components/display/Title";
 import Footer from "../../components/containers/Footer";
+import Range from "../../components/inputs/Range";
 
 interface I_Components {
   [key: string]: {
@@ -66,6 +67,11 @@ export const ComponentsParams: T_Components = {
     requiredProps: ["name"],
     optionalProps: ["placeholder", "disabled", "onChange"],
     component: PasswordField,
+  },
+  Range: {
+    requiredProps: ["name", "min", "max"],
+    optionalProps: ["step", "defaultValue", "onChange"],
+    component: Range,
   },
   // Containers
   Item: {

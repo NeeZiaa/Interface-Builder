@@ -41,7 +41,7 @@ const Selector: React.FC<T_Selector> = ({
             unsubscribeKeyboardEvent("ArrowLeft", onKeyArrowLeft);
             unsubscribeKeyboardEvent("ArrowRight", onKeyArrowRight);
         }
-    }, [subscribeKeyboardEvent, unsubscribeKeyboardEvent, onKeyArrowLeft, onKeyArrowRight]);
+    }, []);
 
     return (
         <input className="selector-container" ref={element} tabIndex={1} name={name} value={options[selected].value} readOnly/>

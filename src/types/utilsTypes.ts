@@ -8,6 +8,7 @@ type PostFetchProps = {
 
 type CallbackProps = {
     type: string;
+    name: string;
     data?: unknown;
 }
 

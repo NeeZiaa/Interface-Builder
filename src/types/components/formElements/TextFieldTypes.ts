@@ -1,6 +1,6 @@
 interface I_TextField {
     name: string;
-    type: string;    
+    type?: string;    
     placeholder?: string;    
     disabled?: boolean;    
     autoComplete?: boolean;   
@@ -10,7 +10,7 @@ interface I_TextField {
 }
 
 type T_TextField = I_TextField;
-type T_TextFieldRequired = Pick<T_TextField, 'name' | 'type'>;
+type T_TextFieldRequired = Pick<T_TextField, 'name'>;
 type T_TextFieldOptional = Omit<T_TextField, keyof T_TextFieldRequired>;
 
 export type {

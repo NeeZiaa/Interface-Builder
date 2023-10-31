@@ -3,7 +3,7 @@ import { T_TextField } from "../../types/components/formElements/TextFieldTypes"
 const AuthorizedTypes = ['text', 'email', 'number', 'tel', 'url'];
 
 const TextField: React.FC<T_TextField> = ({ 
-    name, type, defaultValue="", onChange, placeholder="", disabled=false, autoComplete=false, required=false
+    name, type="text", defaultValue="", onChange, placeholder="", disabled=false, autoComplete=false, required=false
 }) => {
 
     if(!AuthorizedTypes.includes(type)) throw new Error(`Input type ${type} is not supported`);

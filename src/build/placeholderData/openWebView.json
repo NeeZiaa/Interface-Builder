@@ -1,4 +1,5 @@
 {
     "action": "openWebView",
-    "name": "testInterface"
+    "name": "test",
+    "webview": "testInterface"
 }

@@ -27,7 +27,7 @@ export const build = (data: { [key: string]: any }) => {
     }
 
     return (
-        <Interface>
+        <Interface position={context.position} name={data.name}>
             {assembleComponents(components)}
         </Interface>
     );

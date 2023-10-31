@@ -7,22 +7,29 @@ import { FieldsManagerProvider } from "../../providers/FieldsManager";
 
 export const InterfaceContext = createContext({});
 
-const Interface: React.FC<T_Interface> = ({ label, children, width, height} ) => {
+const Interface: React.FC<T_Interface> = ({ label, name, children, width, height, position} ) => {
     
     const { subscribeKeyboardEvent, unsubscribeKeyboardEvent } = useContext(KeyboardEventListener);
+
+    const positions = ['top-left', 'top-center', 'top-right', 'middle-left', 'middle-center', 'middle-right', 'bottom-left', 'bottom-center', 'bottom-right']
+
+    if(!position || positions.indexOf(position) === -1) {
+        console.log('Invalid position, setting default position to top-left')
+        position = 'top-left';
+    }
 
     const onKeyEscape = useCallback(focusOut, []);
 
     useEffect(() => {
         subscribeKeyboardEvent("Escape", onKeyEscape);
         return () => unsubscribeKeyboardEvent("Escape", onKeyEscape);
-    }, [onKeyEscape, subscribeKeyboardEvent, unsubscribeKeyboardEvent]);
+    }, []);
 
     return (
         <div
-            className="interface" 
+            className={"interface " + position} 
             style={{ width, height }}
-            id="interface" 
+            id={"interface-" + name}
         >
             {label && <Title>{label}</Title>}
             

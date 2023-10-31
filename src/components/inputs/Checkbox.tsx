@@ -19,7 +19,7 @@ const Checkbox: React.FC<T_Checkbox> = ({
     useEffect(() => {
         subscribeKeyboardEvent("Enter", onKeyEnter);
         return () => unsubscribeKeyboardEvent("Enter", onKeyEnter);
-    }, [onKeyEnter, subscribeKeyboardEvent, unsubscribeKeyboardEvent]);
+    }, []);
 
     return (
         <input 
