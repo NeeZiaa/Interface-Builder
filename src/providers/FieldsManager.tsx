@@ -20,14 +20,16 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
 
     const childrenCount = filterRecursive(children, (child) => isValidElement(child) && typeof child.type !== 'string' && child.type.name === 'Field').length;
 
-    const onKeyArrowUp = useCallback(() => {
+    const onKeyArrowUp = useCallback((e: KeyboardEvent) => {
+        e.preventDefault();
         setFocusedItem((prev) => {
             if(prev - 1 === 0) return prev;
             return prev - 1
         });
     }, [])
   
-    const onKeyArrowDown = useCallback(() => {
+    const onKeyArrowDown = useCallback((e: KeyboardEvent) => {
+        e.preventDefault();
         setFocusedItem((prev) => {
             if(prev + 1 > childrenCount) return prev;
             return prev + 1
@@ -106,7 +108,8 @@ const FieldsManagerProvider = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     const onFocus = useCallback(() => {
-        console.log('focus'); 
+        console.log('focus');
+        // setFocusedItem(parseInt((document.activeElement as HTMLElement)?.parentElement?.id?.substring(6) ?? '0'));
     }, []);
 
     const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

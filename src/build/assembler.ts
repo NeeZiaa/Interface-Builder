@@ -18,7 +18,7 @@ export const assembleComponents = (components: Props) => {
         }
         buildedComponents.push(
             createElement(
-                ComponentsParams[components[c].type].component,
+                ComponentsParams[components[c].type.charAt(0).toUpperCase() + components[c].type.slice(1)].component,
                 components[c].props
             )
         );
